@@ -28,7 +28,19 @@
     translate: 100% 0;
     top: -4px;
     left: 0;
+}
+
+.SlideInTransition {
     transition-property: translate;
     transition-duration: 0.3s;
     transition-timing-function: ease-in-out;
+}
+
+.pause-bg {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.pause-bg--visible {
+    opacity: 0.9;
 }

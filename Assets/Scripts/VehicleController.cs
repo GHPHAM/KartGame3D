@@ -47,7 +47,7 @@ public class VehicleController : MonoBehaviour
     public Transform bodyTransform;
 
     [Tooltip("Maximum lean angle in degrees when steering at full speed")]
-    public float maxLeanAngle = 15f;
+    public float maxLeanAngle = 5f;
 
     [Tooltip("How quickly the body leans into / recovers from a turn (higher = snappier)")]
     public float leanSmoothing = 8f;
