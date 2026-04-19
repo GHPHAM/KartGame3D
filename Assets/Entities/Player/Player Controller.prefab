@@ -292,6 +292,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 391081c724901db4e8c202fb74153114, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VehicleController
+  maxHealth: 10
+  _health: 10
   maxSpeed: 20
   maxReverseSpeed: 8
   accelerationForce: 20

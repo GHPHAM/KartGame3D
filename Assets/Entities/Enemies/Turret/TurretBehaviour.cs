@@ -12,11 +12,18 @@ using UnityEngine;
 
 public class TurretBehaviour : EnemyBase
 {
+    [Header("Turret")]
+
     //public
     public GameObject projectile;
-    public GameObject target;
+    public Transform shootPoint;
+
+    [Tooltip("Part of the body which follows the player")]
+    public Transform head;
+
 
     //internals
+    protected Transform _target;
 
 
     // Setup -----------------------------------
@@ -26,13 +33,31 @@ public class TurretBehaviour : EnemyBase
         base.Awake();
 
         //setup internals
-        target = VehicleController.singleton.gameObject;
+        _target = VehicleController.singleton.transform;
     }
 
 
     // Behaviour -----------------------------------
+
+
+    //follow target with head
+    private void Update()
+    {
+        if(_target != null)
+        {
+            head.LookAt(_target);
+        }
+    }
+
+
+    //spawn attack projectile
     protected override void attack()
     {
-         Instantiate(projectile);
+        GameObject instance = 
+            Instantiate(projectile, shootPoint.position, shootPoint.rotation);
+
+        instance.gameObject.layer = gameObject.layer;
+
+        instance.GetComponent<ProjectileBase>().setTarget(_target);
     }
 }

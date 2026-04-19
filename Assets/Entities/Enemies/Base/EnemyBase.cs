@@ -13,9 +13,11 @@ using UnityEngine;
 
 public abstract class EnemyBase : EntityStats
 {
+    [Header("Enemy")]
+
     //public
     public int attackDamage = 2;
-    public float attackCooldown = .5f;
+    public float attackCooldown = 2;
 
     [SerializeField] private float _currentCooldown;
 

@@ -12,6 +12,9 @@ using UnityEngine;
 
 public abstract class EntityStats : MonoBehaviour
 {
+    [Header("Base")]
+
+    // public
     public int maxHealth = 10;
 
     // internals
@@ -29,14 +32,6 @@ public abstract class EntityStats : MonoBehaviour
             if (health <= 0)
                 die();
         }
-    }
-
-    // Setup -----------------------------------
-
-    public virtual void Awake()
-    {
-
-        _health = maxHealth;
     }
 
     // manage internals ----------------------
