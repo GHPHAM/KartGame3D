@@ -19,7 +19,7 @@ using UnityEngine.InputSystem;
 ///   The root Rigidbody stays flat; only the body visually tilts.
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
-public class VehicleController : MonoBehaviour
+public class VehicleController : EntityStats
 {
     [Header("Speed Settings")]
     [Tooltip("Maximum forward speed (m/s)")]
@@ -57,6 +57,9 @@ public class VehicleController : MonoBehaviour
     [Tooltip("How quickly the body leans into / recovers from a turn (higher = snappier)")]
     public float leanSmoothing = 8f;
 
+    // -- singleton ----------------------------------------------------------
+    public static VehicleController singleton;
+
     // -- internals ----------------------------------------------------------
     private Rigidbody _rb;
     [SerializeField] private float     _currentSpeed;
@@ -69,6 +72,8 @@ public class VehicleController : MonoBehaviour
 
     void Awake()
     {
+        if(singleton == null) { singleton = this; }
+
         _rb = GetComponent<Rigidbody>();
         _rb.constraints = RigidbodyConstraints.FreezeRotationY |
                           RigidbodyConstraints.FreezeRotationZ;
@@ -212,5 +217,22 @@ public class VehicleController : MonoBehaviour
     {
         float normalizedSpeed = Mathf.Clamp01(_currentSpeed / maxSpeed);
         _cam.fieldOfView = _baseFov + normalizedSpeed * 20f;
+    }
+
+
+    // -- End game when player dies -----------------------------
+    public override void die()
+    {
+        // todo 
+        // actually have a game over
+        Debug.Log("Player Is Deadzo");
+    }
+
+    public override void damage(int damage)
+    {
+        base.damage(damage);
+
+        // todo 
+        // damage visual effect
     }
 }
