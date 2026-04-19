@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.ComponentModel;
+using Unity.Collections;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
@@ -42,6 +44,9 @@ public class VehicleController : MonoBehaviour
     [Tooltip("Minimum speed (m/s) required before steering takes effect")]
     public float minSpeedToSteer = 0.5f;
 
+    [Tooltip("How fast the vheicle readches it's maximum turn speed (0-1)")]
+    public float handling = 0.08f;
+
     [Header("Lean / Body Tilt")]
     [Tooltip("Child GameObject that holds the visible mesh. Leave empty to lean the root (not recommended).")]
     public Transform bodyTransform;
@@ -54,7 +59,8 @@ public class VehicleController : MonoBehaviour
 
     // -- internals ----------------------------------------------------------
     private Rigidbody _rb;
-    private float     _currentSpeed;
+    [SerializeField] private float     _currentSpeed;
+    [SerializeField] private float     _currentSteerSpeed;
     private float     _currentLeanAngle;   // tracks smoothed lean value
     private Keyboard  _kb;
 
@@ -151,7 +157,8 @@ public class VehicleController : MonoBehaviour
 
         float direction  = Mathf.Sign(_currentSpeed);
         float speedRatio = Mathf.Abs(_currentSpeed) / maxSpeed;
-        float turnAmount = steerSpeed * input * direction * speedRatio * Time.fixedDeltaTime;
+        _currentSteerSpeed = Mathf.Lerp(_currentSteerSpeed, steerSpeed * input * direction, handling);
+        float turnAmount = _currentSteerSpeed * speedRatio * Time.fixedDeltaTime;
 
         transform.Rotate(Vector3.up, turnAmount, Space.World);
     }
