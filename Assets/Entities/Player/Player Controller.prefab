@@ -151,6 +151,7 @@ GameObject:
   - component: {fileID: 4817995357828187745}
   - component: {fileID: 4165082584901125471}
   - component: {fileID: 4098562961284168639}
+  - component: {fileID: 2010689916701727748}
   m_Layer: 0
   m_Name: Player Controller
   m_TagString: Untagged
@@ -307,6 +308,28 @@ MonoBehaviour:
   leanSmoothing: 8
   _currentSpeed: 0
   _currentSteerSpeed: 0
+  currentStats:
+    maxSpeed: 0
+    maxReverseSpeed: 0
+    accelerationForce: 0
+    brakeForce: 0
+    steerSpeed: 0
+    handling: 0
+    maxLeanAngle: 0
+    leanSmoothing: 0
+  modifierController: {fileID: 0}
+--- !u!114 &2010689916701727748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2045895445987134247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f323fd2794f89143bc43d8cd60094c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VehicleModifierController
 --- !u!1 &2207849814675551171
 GameObject:
   m_ObjectHideFlags: 0
