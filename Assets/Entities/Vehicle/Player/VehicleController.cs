@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using System.ComponentModel;
+using Entities.Vehicle.Modifiable;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -70,11 +71,14 @@ public class VehicleController : ModifiableVehicleBase
         float throttleInput = GetThrottleInput();
         float steerInput    = GetSteerInput();
 
-        HandleThrottle(throttleInput);
-        HandleSteering(steerInput);
+        //get a copy of the current stats through the get of vehicleStats
+        VehicleStatModifier currentStats = vehicleStats;
+        
+        HandleThrottle(throttleInput, currentStats);
+        HandleSteering(steerInput, currentStats);
         ApplyVelocity();
-        ApplyLean(steerInput);
-        UpdateFov();
+        ApplyLean(steerInput, currentStats);
+        UpdateFov(currentStats);
     }
 
     // -- Input helpers ------------------------------------------------------
@@ -100,54 +104,54 @@ public class VehicleController : ModifiableVehicleBase
     }
 
     // -- Throttle & natural deceleration -----------------------------------
-    void HandleThrottle(float input)
+    void HandleThrottle(float input, VehicleStatModifier currentStats)
     {
         if (input > 0f)
         {
             // Accelerate forward
-            _currentSpeed += vehicleStats.accelerationForce * Time.fixedDeltaTime;
-            _currentSpeed  = Mathf.Min(_currentSpeed, vehicleStats.maxSpeed);
+            _currentSpeed += currentStats.accelerationForce * Time.fixedDeltaTime;
+            _currentSpeed  = Mathf.Min(_currentSpeed, currentStats.maxSpeed);
         }
         else if (input < 0f)
         {
             // Subtract from speed - brakes first, then reverses naturally
-            _currentSpeed -= vehicleStats.brakeForce * Time.fixedDeltaTime;
-            _currentSpeed  = Mathf.Max(_currentSpeed, -vehicleStats.maxReverseSpeed);
+            _currentSpeed -= currentStats.brakeForce * Time.fixedDeltaTime;
+            _currentSpeed  = Mathf.Max(_currentSpeed, -currentStats.maxReverseSpeed);
         }
         else
         {
             // No input - coast to a stop
             if (_currentSpeed > 0f)
             {
-                _currentSpeed -= vehicleStats.naturalDeceleration * Time.fixedDeltaTime;
+                _currentSpeed -= currentStats.naturalDeceleration * Time.fixedDeltaTime;
                 _currentSpeed  = Mathf.Max(_currentSpeed, 0f);
             }
             else if (_currentSpeed < 0f)
             {
-                _currentSpeed += vehicleStats.naturalDeceleration * Time.fixedDeltaTime;
+                _currentSpeed += currentStats.naturalDeceleration * Time.fixedDeltaTime;
                 _currentSpeed  = Mathf.Min(_currentSpeed, 0f);
             }
         }
     }
 
     // -- Steering ----------------------------------------------------------
-    void HandleSteering(float input)
+    void HandleSteering(float input, VehicleStatModifier currentStats)
     {
-        if (Mathf.Abs(_currentSpeed) < vehicleStats.minSpeedToSteer) return;
+        if (Mathf.Abs(_currentSpeed) < currentStats.minSpeedToSteer) return;
 
         float direction  = Mathf.Sign(_currentSpeed);
-        float speedRatio = Mathf.Abs(_currentSpeed) / vehicleStats.maxSpeed;
-        _currentSteerSpeed = Mathf.Lerp(_currentSteerSpeed, vehicleStats.maxSteer * input * direction, vehicleStats.handling);
+        float speedRatio = Mathf.Abs(_currentSpeed) / currentStats.maxSpeed;
+        _currentSteerSpeed = Mathf.Lerp(_currentSteerSpeed, currentStats.maxSteer * input * direction, currentStats.handling);
         float turnAmount = _currentSteerSpeed * speedRatio * Time.fixedDeltaTime;
 
         transform.Rotate(Vector3.up, turnAmount, Space.World);
     }
 
     // -- Lean / body tilt --------------------------------------------------
-    void ApplyLean(float steerInput)
+    void ApplyLean(float steerInput, VehicleStatModifier currentStats)
     {
         // Scale lean by how fast we're going - no lean when nearly stopped
-        float speedRatio  = Mathf.Abs(_currentSpeed) / vehicleStats.maxSpeed;
+        float speedRatio  = Mathf.Abs(_currentSpeed) / currentStats.maxSpeed;
 
         // Lean LEFT when steering right (negative local Z = right tilt in Unity)
         // Flip sign so the top of the body rolls toward the inside of the turn
@@ -188,9 +192,9 @@ public class VehicleController : ModifiableVehicleBase
     }
 
     // -- FOV changing based on speed -----------------------------
-    void UpdateFov()
+    void UpdateFov(VehicleStatModifier currentStats)
     {
-        float normalizedSpeed = Mathf.Clamp01(_currentSpeed / vehicleStats.maxSpeed);
+        float normalizedSpeed = Mathf.Clamp01(_currentSpeed / currentStats.maxSpeed);
         _cam.fieldOfView = _baseFov + normalizedSpeed * 20f;
     }
 
