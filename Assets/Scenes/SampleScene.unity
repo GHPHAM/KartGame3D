@@ -957,6 +957,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Controller
       objectReference: {fileID: 0}
+    - target: {fileID: 4098562961284168639, guid: 0b0d31723b27fda4a852728b850cc160, type: 3}
+      propertyPath: baseStats._maxSteer
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 4098562961284168639, guid: 0b0d31723b27fda4a852728b850cc160, type: 3}
+      propertyPath: baseStats._maxSteerDegrees
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 4989842316753040405, guid: 0b0d31723b27fda4a852728b850cc160, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.5

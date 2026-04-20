@@ -20,34 +20,8 @@ using UnityEngine.InputSystem;
 ///   The root Rigidbody stays flat; only the body visually tilts.
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
-public class VehicleController : EntityStats
+public class VehicleController : ModifiableVehicleBase
 {
-    [Header("Speed Settings")]
-    [Tooltip("Maximum forward speed (m/s)")]
-    public float maxSpeed = 20f;
-
-    [Tooltip("Maximum reverse speed (m/s)")]
-    public float maxReverseSpeed = 8f;
-
-    [Tooltip("Acceleration force applied when pressing forward")]
-    public float accelerationForce = 100f;
-
-    [Tooltip("Braking / reverse force applied when pressing back")]
-    public float brakeForce = 50f;
-
-    [Tooltip("Constant drag that slows the vehicle when no input is given")]
-    public float naturalDeceleration = 4f;
-
-    [Header("Steering Settings")]
-    [Tooltip("How fast the vehicle turns (degrees per second), scales with speed")]
-    public float steerSpeed = 80f;
-
-    [Tooltip("Minimum speed (m/s) required before steering takes effect")]
-    public float minSpeedToSteer = 0.5f;
-
-    [Tooltip("How fast the vheicle readches it's maximum turn speed (0-1)")]
-    public float handling = 0.08f;
-
     [Header("Lean / Body Tilt")]
     [Tooltip("Child GameObject that holds the visible mesh. Leave empty to lean the root (not recommended).")]
     public Transform bodyTransform;
@@ -57,22 +31,19 @@ public class VehicleController : EntityStats
 
     [Tooltip("How quickly the body leans into / recovers from a turn (higher = snappier)")]
     public float leanSmoothing = 8f;
-
+    
     // -- singleton ----------------------------------------------------------
     public static VehicleController singleton;
 
     // -- internals ----------------------------------------------------------
     private Rigidbody _rb;
-    [SerializeField] private float     _currentSpeed;
-    [SerializeField] private float     _currentSteerSpeed;
+    private float     _currentSpeed;
+    private float     _currentSteerSpeed;
     private float     _currentLeanAngle;   // tracks smoothed lean value
     private Keyboard  _kb;
 
     private Camera _cam;
     private float  _baseFov;
-
-    // stats manager
-    public VehicleModifierController modifierController;
 
     void Awake()
     {
@@ -90,9 +61,6 @@ public class VehicleController : EntityStats
         // Fall back to the root transform if no body is assigned
         if (bodyTransform == null)
             bodyTransform = transform;
-
-        //get the vehicle controller and stats components from the parent objects
-        modifierController = GetComponent<VehicleModifierController>();
     }
 
     void FixedUpdate()
@@ -134,31 +102,29 @@ public class VehicleController : EntityStats
     // -- Throttle & natural deceleration -----------------------------------
     void HandleThrottle(float input)
     {
-        var currentStats = modifierController.getCurrentStats(); // get the current stats
-
         if (input > 0f)
         {
             // Accelerate forward
-            _currentSpeed += accelerationForce * Time.fixedDeltaTime;
-            _currentSpeed  = Mathf.Min(_currentSpeed, currentStats.maxSpeed);
+            _currentSpeed += vehicleStats.accelerationForce * Time.fixedDeltaTime;
+            _currentSpeed  = Mathf.Min(_currentSpeed, vehicleStats.maxSpeed);
         }
         else if (input < 0f)
         {
             // Subtract from speed - brakes first, then reverses naturally
-            _currentSpeed -= brakeForce * Time.fixedDeltaTime;
-            _currentSpeed  = Mathf.Max(_currentSpeed, -currentStats.maxReverseSpeed);
+            _currentSpeed -= vehicleStats.brakeForce * Time.fixedDeltaTime;
+            _currentSpeed  = Mathf.Max(_currentSpeed, -vehicleStats.maxReverseSpeed);
         }
         else
         {
             // No input - coast to a stop
             if (_currentSpeed > 0f)
             {
-                _currentSpeed -= naturalDeceleration * Time.fixedDeltaTime;
+                _currentSpeed -= vehicleStats.naturalDeceleration * Time.fixedDeltaTime;
                 _currentSpeed  = Mathf.Max(_currentSpeed, 0f);
             }
             else if (_currentSpeed < 0f)
             {
-                _currentSpeed += naturalDeceleration * Time.fixedDeltaTime;
+                _currentSpeed += vehicleStats.naturalDeceleration * Time.fixedDeltaTime;
                 _currentSpeed  = Mathf.Min(_currentSpeed, 0f);
             }
         }
@@ -167,13 +133,11 @@ public class VehicleController : EntityStats
     // -- Steering ----------------------------------------------------------
     void HandleSteering(float input)
     {
-        var currentStats = modifierController.getCurrentStats(); // get the current stats
-
-        if (Mathf.Abs(_currentSpeed) < minSpeedToSteer) return;
+        if (Mathf.Abs(_currentSpeed) < vehicleStats.minSpeedToSteer) return;
 
         float direction  = Mathf.Sign(_currentSpeed);
-        float speedRatio = Mathf.Abs(_currentSpeed) / currentStats.maxSpeed;
-        _currentSteerSpeed = Mathf.Lerp(_currentSteerSpeed, currentStats.steerSpeed * input * direction, currentStats.handling);
+        float speedRatio = Mathf.Abs(_currentSpeed) / vehicleStats.maxSpeed;
+        _currentSteerSpeed = Mathf.Lerp(_currentSteerSpeed, vehicleStats.maxSteer * input * direction, vehicleStats.handling);
         float turnAmount = _currentSteerSpeed * speedRatio * Time.fixedDeltaTime;
 
         transform.Rotate(Vector3.up, turnAmount, Space.World);
@@ -182,20 +146,18 @@ public class VehicleController : EntityStats
     // -- Lean / body tilt --------------------------------------------------
     void ApplyLean(float steerInput)
     {
-        var currentStats = modifierController.getCurrentStats(); // get the current stats
-
         // Scale lean by how fast we're going - no lean when nearly stopped
-        float speedRatio  = Mathf.Abs(_currentSpeed) / currentStats.maxSpeed;
+        float speedRatio  = Mathf.Abs(_currentSpeed) / vehicleStats.maxSpeed;
 
         // Lean LEFT when steering right (negative local Z = right tilt in Unity)
         // Flip sign so the top of the body rolls toward the inside of the turn
-        float targetLean  = -steerInput * currentStats.maxLeanAngle * speedRatio;
+        float targetLean  = -steerInput * maxLeanAngle * speedRatio;
 
         // Smoothly interpolate toward the target lean angle
         _currentLeanAngle = Mathf.Lerp(
             _currentLeanAngle,
             targetLean,
-            currentStats.leanSmoothing * Time.fixedDeltaTime
+            leanSmoothing * Time.fixedDeltaTime
         );
 
         // Apply only the Z (roll) component; keep X and Y from the body's own local rotation
@@ -228,9 +190,7 @@ public class VehicleController : EntityStats
     // -- FOV changing based on speed -----------------------------
     void UpdateFov()
     {
-        var currentStats = modifierController.getCurrentStats(); // get the current stats
-
-        float normalizedSpeed = Mathf.Clamp01(_currentSpeed / currentStats.maxSpeed);
+        float normalizedSpeed = Mathf.Clamp01(_currentSpeed / vehicleStats.maxSpeed);
         _cam.fieldOfView = _baseFov + normalizedSpeed * 20f;
     }
 
@@ -249,23 +209,5 @@ public class VehicleController : EntityStats
 
         // todo 
         // damage visual effect
-    }
-
-    // -- Get base vehicle stats -----------------------------
-    
-    // function: getBaseStats
-    // purpose: returns the base stats of the player's vehicle
-    public VehicleStats getBaseStatsCopy()
-    {
-        VehicleStats baseStatsCopy = new VehicleStats();
-        baseStatsCopy.maxSpeed = maxSpeed;
-        baseStatsCopy.maxReverseSpeed = maxReverseSpeed;
-        baseStatsCopy.accelerationForce = accelerationForce;
-        baseStatsCopy.brakeForce = brakeForce;
-        baseStatsCopy.steerSpeed = steerSpeed;
-        baseStatsCopy.handling = handling;
-        baseStatsCopy.maxLeanAngle = maxLeanAngle;
-        baseStatsCopy.leanSmoothing = leanSmoothing;
-        return baseStatsCopy;
     }
 }
