@@ -32,7 +32,7 @@ public class VehicleController : ModifiableVehicleBase
 
     [Tooltip("How quickly the body leans into / recovers from a turn (higher = snappier)")]
     public float leanSmoothing = 8f;
-    
+
     // -- singleton ----------------------------------------------------------
     public static VehicleController singleton;
 
@@ -73,7 +73,7 @@ public class VehicleController : ModifiableVehicleBase
 
         //get a copy of the current stats through the get of vehicleStats
         VehicleStatModifier currentStats = vehicleStats;
-        
+
         HandleThrottle(throttleInput, currentStats);
         HandleSteering(steerInput, currentStats);
         ApplyVelocity();
@@ -202,7 +202,7 @@ public class VehicleController : ModifiableVehicleBase
     // -- End game when player dies -----------------------------
     public override void die()
     {
-        // todo 
+        // todo
         // actually have a game over
         Debug.Log("Player Is Deadzo");
     }
@@ -211,7 +211,9 @@ public class VehicleController : ModifiableVehicleBase
     {
         base.damage(damage);
 
-        // todo 
+        Debug.Log($"[DEBUG] Player took {damage} damage | HP: {health}/{maxHealth}");
+        // todo
         // damage visual effect
+        // hook up to UI
     }
 }
