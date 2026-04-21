@@ -1,7 +1,7 @@
 /***************************************************************
 *file: EnemyBase.cs
 *author: Cole Harsch
-*class: CS 4700 – Game Development
+*class: CS 4700 ï¿½ Game Development
 *assignment: final program
 *date last modified: 4/18/26
 *
@@ -40,7 +40,7 @@ public abstract class EnemyBase : EntityStats
 
     protected void cooldownAttack()
     {
-        _currentCooldown += Time.deltaTime;
+        _currentCooldown += Time.fixedDeltaTime;
 
         if(_currentCooldown > attackCooldown)
         {
