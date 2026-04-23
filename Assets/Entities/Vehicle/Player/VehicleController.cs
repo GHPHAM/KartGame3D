@@ -130,8 +130,6 @@ public class VehicleController : ModifiableVehicleBase
     // -- Throttle & natural deceleration -----------------------------------
     void HandleThrottle(float input, VehicleStatModifier currentStats)
     {
-        print(_grip);
-
         if (input > 0f)
         {
             // Accelerate forward
