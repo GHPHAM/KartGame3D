@@ -301,12 +301,15 @@ MonoBehaviour:
     _accelerationForce: 20
     _brakeForce: 10
     _naturalDeceleration: 4
-    _maxSteer: 0
+    _maxSteer: 200
     _minSpeedToSteer: 0.5
     _handling: 0.08
+  modifiers: []
   bodyTransform: {fileID: 8032623499802316832}
   maxLeanAngle: 5
   leanSmoothing: 8
+  driftGrip: 0.1
+  _grip: 0
 --- !u!1 &2207849814675551171
 GameObject:
   m_ObjectHideFlags: 0

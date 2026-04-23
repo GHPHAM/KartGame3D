@@ -1,7 +1,9 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using JetBrains.Annotations;
 using System.ComponentModel;
 using Entities.Vehicle.Modifiable;
 using Unity.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -33,6 +35,15 @@ public class VehicleController : ModifiableVehicleBase
     [Tooltip("How quickly the body leans into / recovers from a turn (higher = snappier)")]
     public float leanSmoothing = 8f;
     
+    [Tooltip("How much velocity is affected by your steering")]
+    public float grip = .1f;
+    
+    [Tooltip("How much your grip is affected by drifting")]
+    public float driftGripMultiplier = .1f;
+    
+    [Tooltip("How fast you change from drift grip to regular grip")]
+    public float driftTransitionSpeed = .2f;
+    
     // -- singleton ----------------------------------------------------------
     public static VehicleController singleton;
 
@@ -45,13 +56,15 @@ public class VehicleController : ModifiableVehicleBase
 
     private Camera _cam;
     private float  _baseFov;
+    private float  _grip;
 
     void Awake()
     {
         if(singleton == null) { singleton = this; }
 
         _rb = GetComponent<Rigidbody>();
-        _rb.constraints = RigidbodyConstraints.FreezeRotationY |
+        _rb.constraints = RigidbodyConstraints.FreezeRotationX |
+                          RigidbodyConstraints.FreezeRotationY |
                           RigidbodyConstraints.FreezeRotationZ;
 
         _kb = Keyboard.current;
@@ -74,6 +87,7 @@ public class VehicleController : ModifiableVehicleBase
         //get a copy of the current stats through the get of vehicleStats
         VehicleStatModifier currentStats = vehicleStats;
         
+        HandleGrip();
         HandleThrottle(throttleInput, currentStats);
         HandleSteering(steerInput, currentStats);
         ApplyVelocity();
@@ -103,19 +117,32 @@ public class VehicleController : ModifiableVehicleBase
         return 0f;
     }
 
+    private void HandleGrip()
+    {
+        _grip = Mathf.Lerp(
+            _grip,
+            _kb.shiftKey.isPressed ? 
+                grip * driftGripMultiplier :
+                grip,
+            driftTransitionSpeed
+            );
+    }
+
     // -- Throttle & natural deceleration -----------------------------------
     void HandleThrottle(float input, VehicleStatModifier currentStats)
     {
+        print(_grip);
+        
         if (input > 0f)
         {
             // Accelerate forward
-            _currentSpeed += currentStats.accelerationForce * Time.fixedDeltaTime;
+            _currentSpeed += _grip * currentStats.accelerationForce * Time.fixedDeltaTime;
             _currentSpeed  = Mathf.Min(_currentSpeed, currentStats.maxSpeed);
         }
         else if (input < 0f)
         {
             // Subtract from speed - brakes first, then reverses naturally
-            _currentSpeed -= currentStats.brakeForce * Time.fixedDeltaTime;
+            _currentSpeed -= _grip * currentStats.brakeForce * Time.fixedDeltaTime;
             _currentSpeed  = Mathf.Max(_currentSpeed, -currentStats.maxReverseSpeed);
         }
         else
@@ -123,12 +150,12 @@ public class VehicleController : ModifiableVehicleBase
             // No input - coast to a stop
             if (_currentSpeed > 0f)
             {
-                _currentSpeed -= currentStats.naturalDeceleration * Time.fixedDeltaTime;
+                _currentSpeed -= _grip * currentStats.naturalDeceleration * Time.fixedDeltaTime;
                 _currentSpeed  = Mathf.Max(_currentSpeed, 0f);
             }
             else if (_currentSpeed < 0f)
             {
-                _currentSpeed += currentStats.naturalDeceleration * Time.fixedDeltaTime;
+                _currentSpeed += _grip * currentStats.naturalDeceleration * Time.fixedDeltaTime;
                 _currentSpeed  = Mathf.Min(_currentSpeed, 0f);
             }
         }
@@ -167,28 +194,28 @@ public class VehicleController : ModifiableVehicleBase
         // Apply only the Z (roll) component; keep X and Y from the body's own local rotation
         Vector3 currentEuler = bodyTransform.localEulerAngles;
         bodyTransform.localEulerAngles = new Vector3(
-            _currentLeanAngle,
+            currentEuler.x,
             currentEuler.y,
-            currentEuler.z
+            _currentLeanAngle
         );
     }
 
     // -- Push Rigidbody along the local X axis -----------------------------
     void ApplyVelocity()
     {
-        Vector3 horizontalVelocity = transform.right * _currentSpeed;
+        Vector3 horizontalVelocity = transform.forward * _currentSpeed;
         _rb.linearVelocity = new Vector3(
             horizontalVelocity.x,
             _rb.linearVelocity.y,
             horizontalVelocity.z
-        );
+        ) * _grip + _rb.linearVelocity * (1 - _grip);
     }
 
     // -- Gizmo: red arrow = vehicle forward (local X) ----------------------
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, transform.right * 2f);
+        Gizmos.DrawRay(transform.position, transform.forward * 2f);
     }
 
     // -- FOV changing based on speed -----------------------------
