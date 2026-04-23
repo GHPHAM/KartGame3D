@@ -151,9 +151,9 @@ GameObject:
   - component: {fileID: 4817995357828187745}
   - component: {fileID: 4165082584901125471}
   - component: {fileID: 4098562961284168639}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player Controller
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

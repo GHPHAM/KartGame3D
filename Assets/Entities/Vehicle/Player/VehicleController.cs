@@ -1,5 +1,4 @@
-﻿using System;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using System.ComponentModel;
 using Entities.Vehicle.Modifiable;
 using Unity.Collections;
@@ -34,16 +33,16 @@ public class VehicleController : ModifiableVehicleBase
 
     [Tooltip("How quickly the body leans into / recovers from a turn (higher = snappier)")]
     public float leanSmoothing = 8f;
-    
+
     [Tooltip("How much velocity is affected by your steering")]
     public float grip = .1f;
-    
+
     [Tooltip("How much your grip is affected by drifting")]
     public float driftGripMultiplier = .1f;
-    
+
     [Tooltip("How fast you change from drift grip to regular grip")]
     public float driftTransitionSpeed = .2f;
-    
+
     // -- singleton ----------------------------------------------------------
     public static VehicleController singleton;
 
@@ -86,7 +85,7 @@ public class VehicleController : ModifiableVehicleBase
 
         //get a copy of the current stats through the get of vehicleStats
         VehicleStatModifier currentStats = vehicleStats;
-        
+
         HandleGrip();
         HandleThrottle(throttleInput, currentStats);
         HandleSteering(steerInput, currentStats);
@@ -121,7 +120,7 @@ public class VehicleController : ModifiableVehicleBase
     {
         _grip = Mathf.Lerp(
             _grip,
-            _kb.shiftKey.isPressed ? 
+            _kb.shiftKey.isPressed ?
                 grip * driftGripMultiplier :
                 grip,
             driftTransitionSpeed
@@ -132,7 +131,7 @@ public class VehicleController : ModifiableVehicleBase
     void HandleThrottle(float input, VehicleStatModifier currentStats)
     {
         print(_grip);
-        
+
         if (input > 0f)
         {
             // Accelerate forward
@@ -229,7 +228,7 @@ public class VehicleController : ModifiableVehicleBase
     // -- End game when player dies -----------------------------
     public override void die()
     {
-        // todo 
+        // todo
         // actually have a game over
         Debug.Log("Player Is Deadzo");
     }
@@ -238,7 +237,9 @@ public class VehicleController : ModifiableVehicleBase
     {
         base.damage(damage);
 
-        // todo 
+        Debug.Log($"[DEBUG] Player took {damage} damage | HP: {health}/{maxHealth}");
+        // todo
         // damage visual effect
+        // hook up to UI
     }
 }
