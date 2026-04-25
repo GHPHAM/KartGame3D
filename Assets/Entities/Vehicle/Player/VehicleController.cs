@@ -1,4 +1,17 @@
-﻿using JetBrains.Annotations;
+﻿/***************************************************************
+*file: VehicleController.cs
+*author: 
+*class: CS 4700 – Game Development
+*assignment: final program
+*date last modified: 4/24/26
+*
+*purpose: This script manages the player's vehicle movement, including acceleration, 
+*braking, steering, and leaning. It also handles input from the keyboard and applies 
+*any active stat modifiers from powerups. It should be attached to the player's vehicle 
+*GameObject, which must also have a Rigidbody component.
+*
+****************************************************************/
+using JetBrains.Annotations;
 using System.ComponentModel;
 using Entities.Vehicle.Modifiable;
 using Unity.Collections;
@@ -220,6 +233,57 @@ public class VehicleController : ModifiableVehicleBase
     {
         float normalizedSpeed = Mathf.Clamp01(_currentSpeed / currentStats.maxSpeed);
         _cam.fieldOfView = _baseFov + normalizedSpeed * 20f;
+    }
+
+    // -- Manage Item Pickups ----------------------------------
+    //function: CollectPowerUp
+    //purpose: to apply the effects of a collected powerup to the player
+    public void CollectPowerUp(PowerUpData data)
+    {
+        Debug.Log($"Collected PowerUp: {data.powerUpName}");
+
+        switch (data.type)
+        {
+            case PowerUpType.SpeedBoost:
+                Debug.Log($"Applying {data.powerUpName}");
+
+                //build speed boost modifier
+                VehicleStatModifier speedMod = new VehicleStatModifier.Builder().
+                    maxSpeed(data.magnitude).
+                    accelerationForce(data.magnitude/2).
+                    Build();
+
+                speedMod.identifier = data.powerUpName; //set identifier
+
+                addModifier( speedMod );
+
+                if ( data.lifetime == PowerUpLifetime.Temporary )
+                {
+                    StartCoroutine( removeModifierAfterTime(speedMod, data.duration, data.powerUpName));
+                }
+                break;
+
+            case PowerUpType.DamageBoost:
+                Debug.Log("Damage boost not implemented yet");
+                break;
+
+            case PowerUpType.Reflect:
+                Debug.Log("Reflect not implemented yet");
+                break;
+
+            case PowerUpType.HealthRestore:
+                Debug.Log("Health restore not implemented yet");
+                break;
+        }
+    }
+
+    //function: removeModifierAfterTime
+    //purpose: to remove a stat modifier after a certain duration, used for temporary powerups
+    private System.Collections.IEnumerator removeModifierAfterTime(VehicleStatModifier mod, float time, string powerUpName)
+    {
+        yield return new WaitForSeconds(time);
+        removeModifier(mod);
+        Debug.Log($"{powerUpName} expired");
     }
 
 
