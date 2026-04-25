@@ -1,13 +1,13 @@
 ﻿/***************************************************************
 *file: VehicleController.cs
-*author: 
+*author:
 *class: CS 4700 – Game Development
 *assignment: final program
 *date last modified: 4/24/26
 *
-*purpose: This script manages the player's vehicle movement, including acceleration, 
-*braking, steering, and leaning. It also handles input from the keyboard and applies 
-*any active stat modifiers from powerups. It should be attached to the player's vehicle 
+*purpose: This script manages the player's vehicle movement, including acceleration,
+*braking, steering, and leaning. It also handles input from the keyboard and applies
+*any active stat modifiers from powerups. It should be attached to the player's vehicle
 *GameObject, which must also have a Rigidbody component.
 *
 ****************************************************************/
@@ -299,9 +299,8 @@ public class VehicleController : ModifiableVehicleBase
     {
         base.damage(damage);
 
-        Debug.Log($"[DEBUG] Player took {damage} damage | HP: {health}/{maxHealth}");
-        // todo
-        // damage visual effect
-        // hook up to UI
+        //Debug.Log($"[DEBUG] Player took {damage} damage | HP: {health}/{maxHealth}");
+
+        HUDController.NotifyDamage(health, maxHealth);
     }
 }

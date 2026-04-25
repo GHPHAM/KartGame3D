@@ -1,0 +1,7 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="HealthWrapper" style="flex-grow: 1; background-color: rgb(140, 32, 32); width: 25%; height: 4%; position: absolute; bottom: 0; aspect-ratio: auto; border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px;">
+        <ui:VisualElement style="flex-grow: 1; background-color: rgb(152, 152, 152);">
+            <ui:VisualElement name="Health" style="flex-grow: 1; width: 100%; background-color: rgb(76, 233, 89);"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
