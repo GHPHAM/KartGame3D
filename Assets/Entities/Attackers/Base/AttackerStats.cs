@@ -16,34 +16,17 @@ public abstract class AttackerStats<T> : EntityStats<T> where T : AttackerStatsM
 {
     [Header("Attacker")]
 
-    [SerializeField] private float _currentCooldown;
+    private double lastAttackTime = 0;
 
-    // Setup -----------------------------------
-
-    //setup internals
-    protected override void Awake()
-    {
-        base.Awake();
-        _currentCooldown = currentStats.attackCooldown;
-    }
-
-
+    
     // Behaviour -----------------------------------
 
-    protected override void FixedUpdate()
+
+    protected void attemptAttack()
     {
-        base.FixedUpdate();
-        cooldownAttack();
-    }
-
-
-    protected void cooldownAttack()
-    {
-        _currentCooldown += Time.fixedDeltaTime;
-
-        if(_currentCooldown > currentStats.attackCooldown)
+        if(Time.timeAsDouble - lastAttackTime > currentStats.attackCooldown)
         {
-            _currentCooldown = 0;
+            lastAttackTime = Time.timeAsDouble;
             attack();
         }
     }

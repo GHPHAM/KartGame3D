@@ -38,6 +38,7 @@ using UnityEngine.InputSystem;
 public class VehicleController : VehicleStats<VehicleStatsModifier>
 {
     [Header("Lean / Body Tilt")]
+    
     [Tooltip("Child GameObject that holds the visible mesh. Leave empty to lean the root (not recommended).")]
     public Transform bodyTransform;
 
@@ -47,6 +48,8 @@ public class VehicleController : VehicleStats<VehicleStatsModifier>
     [Tooltip("How quickly the body leans into / recovers from a turn (higher = snappier)")]
     public float leanSmoothing = 8f;
 
+    [Header("Grip")]
+    
     [Tooltip("How much velocity is affected by your steering")]
     public float grip = .1f;
 
@@ -56,6 +59,14 @@ public class VehicleController : VehicleStats<VehicleStatsModifier>
     [Tooltip("How fast you change from drift grip to regular grip")]
     public float driftTransitionSpeed = .2f;
 
+    [Header("Grip")]
+
+    [Tooltip("The sopt a which the firing projectile starts from")]
+    public Transform attackRoot;
+    
+    [Tooltip("Which projectile is fired on attack")]
+    public GameObject firingProjectilePrefab;
+    
     // -- singleton ----------------------------------------------------------
     public static VehicleController singleton;
 
@@ -65,6 +76,7 @@ public class VehicleController : VehicleStats<VehicleStatsModifier>
     private float     _currentSteerSpeed;
     private float     _currentLeanAngle;   // tracks smoothed lean value
     private Keyboard  _kb;
+    private Mouse  _mouse;
 
     private Camera _cam;
     private float  _baseFov;
@@ -81,6 +93,7 @@ public class VehicleController : VehicleStats<VehicleStatsModifier>
                           RigidbodyConstraints.FreezeRotationZ;
 
         _kb = Keyboard.current;
+        _mouse = Mouse.current;
 
         _cam     = GetComponentInChildren<Camera>();
         _baseFov = _cam.fieldOfView;
@@ -99,6 +112,9 @@ public class VehicleController : VehicleStats<VehicleStatsModifier>
         float throttleInput = GetThrottleInput();
         float steerInput    = GetSteerInput();
 
+        if(_mouse.leftButton.isPressed)
+            attemptAttack();
+        
         HandleGrip();
         HandleThrottle(throttleInput);
         HandleSteering(steerInput);
@@ -285,6 +301,21 @@ public class VehicleController : VehicleStats<VehicleStatsModifier>
         Debug.Log($"{powerUpName} expired");
     }
 
+    protected override void attack()
+    {
+        GameObject obj = Instantiate(firingProjectilePrefab, attackRoot.position, attackRoot.rotation);
+
+        if (!obj.TryGetComponent(out ProjectileBase projectile))
+        {
+            return;
+        }
+        
+        // find a target
+        obj.layer = gameObject.layer;
+        projectile.setTarget(null);
+        projectile.damage = currentStats.attackDamage;
+    }
+    
 
     // -- End game when player dies -----------------------------
     public override void die()

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4670737721487688667}
   - component: {fileID: 2965540229976765725}
   - component: {fileID: 8906252788231852207}
+  - component: {fileID: 7517894095259801964}
   m_Layer: 7
   m_Name: MeleeEnemy
   m_TagString: Untagged
@@ -58,9 +59,6 @@ MonoBehaviour:
     _attackDamage: 0
     _attackCooldown: 0
   modifiers: []
-  attackDamage: 2
-  attackCooldown: 2
-  _currentCooldown: 0
   moveSpeed: 5
   attackRange: 1.2
 --- !u!54 &8906252788231852207
@@ -90,6 +88,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!136 &7517894095259801964
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2323894290704134899}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.25, z: 0}
 --- !u!1 &5198234294185345032
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,7 +122,6 @@ GameObject:
   - component: {fileID: 45593561131088846}
   - component: {fileID: 8719636403276999604}
   - component: {fileID: 4329577695248400062}
-  - component: {fileID: 7182513573237592960}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -181,26 +201,3 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &7182513573237592960
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5198234294185345032}
-  m_Material: {fileID: 13400000, guid: 41969c536e76bf64e8340284bcdb18fb, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}

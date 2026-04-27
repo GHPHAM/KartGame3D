@@ -43,6 +43,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1280075913099664233}
   - component: {fileID: 415160441624077592}
+  - component: {fileID: 3504406629018732124}
   m_Layer: 7
   m_Name: Turret
   m_TagString: Untagged
@@ -91,12 +92,30 @@ MonoBehaviour:
     _attackDamage: 0
     _attackCooldown: 0
   modifiers: []
-  attackDamage: 2
-  attackCooldown: 0.5
-  _currentCooldown: 0
   projectile: {fileID: 922423110327829901, guid: f7b7981c1af8e934c8cfabef8cde61a4, type: 3}
   shootPoint: {fileID: 4526950795554584959}
   head: {fileID: 9164561937544775830}
+--- !u!65 &3504406629018732124
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2782471837712168748}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 2, z: 2}
+  m_Center: {x: 0, y: 0.74, z: 0}
 --- !u!1 &3706606552705559702
 GameObject:
   m_ObjectHideFlags: 0
@@ -720,7 +739,6 @@ GameObject:
   - component: {fileID: 3717010410246588663}
   - component: {fileID: 7206104495653167577}
   - component: {fileID: 7856434366196367049}
-  - component: {fileID: 2588471626283793143}
   m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
@@ -1017,24 +1035,3 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
---- !u!65 &2588471626283793143
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7199803354152387894}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.5999999, y: 1, z: 0.6}
-  m_Center: {x: 0.019690037, y: 0, z: 0.013750002}

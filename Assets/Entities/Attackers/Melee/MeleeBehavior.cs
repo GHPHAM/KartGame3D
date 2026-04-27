@@ -39,8 +39,7 @@ public class MeleeBehavior : AttackerStats<AttackerStatsModifier>
     protected new void FixedUpdate()
     {
         // Let EnemyBase handle the attack cooldown timer
-        base.FixedUpdate();
-
+        attemptAttack();
         MoveTowardPlayer();
     }
 

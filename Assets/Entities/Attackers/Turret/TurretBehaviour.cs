@@ -41,6 +41,12 @@ public class TurretBehaviour : AttackerStats<AttackerStatsModifier>
 
     // Behaviour -----------------------------------
 
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+        attemptAttack();
+    }
+    
 
     //follow target with head
     private void Update()
@@ -57,7 +63,7 @@ public class TurretBehaviour : AttackerStats<AttackerStatsModifier>
     {
         GameObject instance = 
             Instantiate(projectile, shootPoint.position, shootPoint.rotation);
-
+        
         instance.gameObject.layer = gameObject.layer;
 
         instance.GetComponent<ProjectileBase>().setTarget(_target);

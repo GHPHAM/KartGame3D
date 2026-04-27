@@ -28,16 +28,22 @@ namespace Entities
         public int health
         {
             get => _health;
-            set => _health = value;
+            set
+            {
+                if(value < 0)
+                    die();
+                
+                _health = value;
+            }
         }
-        
+
         // ---- Behaviour ----------------------------------
         
         
         //damage the enitiy
         public virtual void damage(int damage)
         {
-            _health -= damage;
+            health -= damage;
         }
 
         //entity death (health = 0)
