@@ -1321,6 +1321,22 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4098562961284168639, guid: 0b0d31723b27fda4a852728b850cc160, type: 3}
+      propertyPath: attackRoot
+      value: 
+      objectReference: {fileID: 2142224481}
+    - target: {fileID: 4098562961284168639, guid: 0b0d31723b27fda4a852728b850cc160, type: 3}
+      propertyPath: firingProjectilePrefab
+      value: 
+      objectReference: {fileID: 922423110327829901, guid: f7b7981c1af8e934c8cfabef8cde61a4, type: 3}
+    - target: {fileID: 4098562961284168639, guid: 0b0d31723b27fda4a852728b850cc160, type: 3}
+      propertyPath: baseStats._attackDamage
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4098562961284168639, guid: 0b0d31723b27fda4a852728b850cc160, type: 3}
+      propertyPath: baseStats._attackCooldown
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 4493082318577733991, guid: 0b0d31723b27fda4a852728b850cc160, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1455,7 +1471,7 @@ PrefabInstance:
       objectReference: {fileID: 1047477382}
     - target: {fileID: 2907615538335080630, guid: 14e336afde5fba548ad2282185cbf310, type: 3}
       propertyPath: m_VersionIndex
-      value: 1001
+      value: 1004
       objectReference: {fileID: 0}
     - target: {fileID: 3717010410246588663, guid: 14e336afde5fba548ad2282185cbf310, type: 3}
       propertyPath: m_Mesh
@@ -1471,7 +1487,7 @@ PrefabInstance:
       objectReference: {fileID: 1374270350}
     - target: {fileID: 7856434366196367049, guid: 14e336afde5fba548ad2282185cbf310, type: 3}
       propertyPath: m_VersionIndex
-      value: 501
+      value: 504
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
