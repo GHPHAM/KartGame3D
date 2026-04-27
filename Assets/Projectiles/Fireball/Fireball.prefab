@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3167850038569343252}
   - component: {fileID: 6253091651692191454}
   - component: {fileID: 5755926532168391611}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Fireball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77,6 +77,16 @@ MonoBehaviour:
   damage: 1
   speed: 50
   lifetime: 10
+  autoTargetRange: 40
+  autoTargetMaxAngle: 20
+  targetableLayers:
+    serializedVersion: 2
+    m_Bits: 8
+  collidableLayers:
+    serializedVersion: 2
+    m_Bits: 63
+  ownerGracePeriod: 0.5
+  homingRange: 0
 --- !u!135 &5755926532168391611
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -109,7 +119,7 @@ GameObject:
   - component: {fileID: 3127607983338665031}
   - component: {fileID: 3073669075388952111}
   - component: {fileID: 2569759746863019873}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}

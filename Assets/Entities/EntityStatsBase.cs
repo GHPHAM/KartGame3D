@@ -18,12 +18,24 @@ namespace Entities
     {
         // ---- Internals ----------------------------------
         
-        
+        [Tooltip("Transform to target projectiles to when being fired at, defaults to this object's transform")]
+        [SerializeField] protected Transform _hitTarget;
         [SerializeField] protected int _health;
         
         
         // ---- Get/Set ----------------------------------
 
+
+        public Transform hitTarget
+        {
+            get{
+                if (_hitTarget == null) return transform;
+                return _hitTarget;
+            }
+            set{
+                _hitTarget = value;
+            }
+        }
 
         public int health
         {
@@ -38,6 +50,12 @@ namespace Entities
         }
 
         // ---- Behaviour ----------------------------------
+
+        protected virtual void Awake()
+        {
+            if (_hitTarget == null)
+                _hitTarget = transform;
+        }
         
         
         //damage the enitiy

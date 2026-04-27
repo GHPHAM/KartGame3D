@@ -131,6 +131,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: MeleeEnemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2323894290704134899, guid: bff7fd8f66270f742ad845cc1d6c74e3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2323894290704134899, guid: bff7fd8f66270f742ad845cc1d6c74e3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4670737721487688667, guid: bff7fd8f66270f742ad845cc1d6c74e3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.641144
@@ -170,6 +178,10 @@ PrefabInstance:
     - target: {fileID: 4670737721487688667, guid: bff7fd8f66270f742ad845cc1d6c74e3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5198234294185345032, guid: bff7fd8f66270f742ad845cc1d6c74e3, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -320,6 +332,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: MeleeEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 2323894290704134899, guid: bff7fd8f66270f742ad845cc1d6c74e3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2323894290704134899, guid: bff7fd8f66270f742ad845cc1d6c74e3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4670737721487688667, guid: bff7fd8f66270f742ad845cc1d6c74e3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.2538185
@@ -359,6 +379,10 @@ PrefabInstance:
     - target: {fileID: 4670737721487688667, guid: bff7fd8f66270f742ad845cc1d6c74e3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5198234294185345032, guid: bff7fd8f66270f742ad845cc1d6c74e3, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1166,7 +1190,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2142224481}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Shoot Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1311,15 +1335,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 554075423795912061, guid: 0b0d31723b27fda4a852728b850cc160, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2045895445987134247, guid: 0b0d31723b27fda4a852728b850cc160, type: 3}
       propertyPath: m_Name
       value: Controller
       objectReference: {fileID: 0}
+    - target: {fileID: 2045895445987134247, guid: 0b0d31723b27fda4a852728b850cc160, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2207849814675551171, guid: 0b0d31723b27fda4a852728b850cc160, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4098562961284168639, guid: 0b0d31723b27fda4a852728b850cc160, type: 3}
       propertyPath: attackRoot
@@ -1331,7 +1359,7 @@ PrefabInstance:
       objectReference: {fileID: 922423110327829901, guid: f7b7981c1af8e934c8cfabef8cde61a4, type: 3}
     - target: {fileID: 4098562961284168639, guid: 0b0d31723b27fda4a852728b850cc160, type: 3}
       propertyPath: baseStats._attackDamage
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4098562961284168639, guid: 0b0d31723b27fda4a852728b850cc160, type: 3}
       propertyPath: baseStats._attackCooldown
@@ -1413,6 +1441,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 274215153699515388, guid: 14e336afde5fba548ad2282185cbf310, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 415160441624077592, guid: 14e336afde5fba548ad2282185cbf310, type: 3}
       propertyPath: _health
       value: 10
@@ -1465,29 +1497,49 @@ PrefabInstance:
       propertyPath: m_Name
       value: TurretEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 2782471837712168748, guid: 14e336afde5fba548ad2282185cbf310, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2907615538335080630, guid: 14e336afde5fba548ad2282185cbf310, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1047477382}
     - target: {fileID: 2907615538335080630, guid: 14e336afde5fba548ad2282185cbf310, type: 3}
       propertyPath: m_VersionIndex
-      value: 1004
+      value: 1016
+      objectReference: {fileID: 0}
+    - target: {fileID: 3706606552705559702, guid: 14e336afde5fba548ad2282185cbf310, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3717010410246588663, guid: 14e336afde5fba548ad2282185cbf310, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1374270350}
+    - target: {fileID: 4172840529505764507, guid: 14e336afde5fba548ad2282185cbf310, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5474579877956717036, guid: 14e336afde5fba548ad2282185cbf310, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7013284946577688495, guid: 14e336afde5fba548ad2282185cbf310, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1047477382}
+    - target: {fileID: 7199803354152387894, guid: 14e336afde5fba548ad2282185cbf310, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7856434366196367049, guid: 14e336afde5fba548ad2282185cbf310, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1374270350}
     - target: {fileID: 7856434366196367049, guid: 14e336afde5fba548ad2282185cbf310, type: 3}
       propertyPath: m_VersionIndex
-      value: 504
+      value: 516
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

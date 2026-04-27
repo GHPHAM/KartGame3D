@@ -311,8 +311,7 @@ public class VehicleController : VehicleStats<VehicleStatsModifier>
         }
         
         // find a target
-        obj.layer = gameObject.layer;
-        projectile.setTarget(null);
+        projectile.setup(transform, null);
         projectile.damage = currentStats.attackDamage;
     }
     

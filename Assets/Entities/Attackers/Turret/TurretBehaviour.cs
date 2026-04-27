@@ -63,9 +63,6 @@ public class TurretBehaviour : AttackerStats<AttackerStatsModifier>
     {
         GameObject instance = 
             Instantiate(projectile, shootPoint.position, shootPoint.rotation);
-        
-        instance.gameObject.layer = gameObject.layer;
-
-        instance.GetComponent<ProjectileBase>().setTarget(_target);
+        instance.GetComponent<ProjectileBase>().setup(transform, _target);
     }
 }

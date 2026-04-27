@@ -19,16 +19,18 @@ public class FireballBehaviour : ProjectileBase
     // Behaviour -----------------------------------
 
     // look and set velocity toward target
-    public override void setTarget(Transform t)
+    public override void setTarget(Transform target)
     {
+        base.setTarget(target);
+        
         if (_target == null)
         {
             _rb.linearVelocity = transform.forward  * speed;
             return;
         }
         
-        transform.LookAt(t);
+        transform.LookAt(_target);
         
-        _rb.linearVelocity = (t.position - transform.position).normalized  * speed;
+        _rb.linearVelocity = (_target.position - transform.position).normalized  * speed;
     }
 }

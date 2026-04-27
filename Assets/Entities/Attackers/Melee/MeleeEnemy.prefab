@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2965540229976765725}
   - component: {fileID: 8906252788231852207}
   - component: {fileID: 7517894095259801964}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: MeleeEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25007005d796be348b31431bcf0ae69d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeBehavior
+  _hitTarget: {fileID: 45593561131088846}
   _health: 10
   baseStats:
     identifier: 
@@ -122,7 +123,7 @@ GameObject:
   - component: {fileID: 45593561131088846}
   - component: {fileID: 8719636403276999604}
   - component: {fileID: 4329577695248400062}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
