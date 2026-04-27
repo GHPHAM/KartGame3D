@@ -118,7 +118,6 @@ public class VehicleController : VehicleStats<VehicleStatsModifier>
         HandleGrip();
         HandleThrottle(throttleInput);
         HandleSteering(steerInput);
-        ApplyVelocity();
         ApplyLean(steerInput);
         UpdateFov();
     }
@@ -162,39 +161,32 @@ public class VehicleController : VehicleStats<VehicleStatsModifier>
         if (input > 0f)
         {
             // Accelerate forward
-            _currentSpeed += _grip * currentStats.accelerationForce * Time.fixedDeltaTime;
-            _currentSpeed  = Mathf.Min(_currentSpeed, currentStats.maxSpeed);
+            _currentSpeed = Mathf.Lerp(_currentSpeed, currentStats.maxSpeed, currentStats.accelerationForce);
         }
         else if (input < 0f)
         {
             // Subtract from speed - brakes first, then reverses naturally
-            _currentSpeed -= _grip * currentStats.brakeForce * Time.fixedDeltaTime;
-            _currentSpeed  = Mathf.Max(_currentSpeed, -currentStats.maxReverseSpeed);
+            _currentSpeed = Mathf.Lerp(_currentSpeed, -currentStats.maxReverseSpeed, currentStats.brakeForce);
         }
         else
         {
-            // No input - coast to a stop
-            if (_currentSpeed > 0f)
-            {
-                _currentSpeed -= _grip * currentStats.naturalDeceleration * Time.fixedDeltaTime;
-                _currentSpeed  = Mathf.Max(_currentSpeed, 0f);
-            }
-            else if (_currentSpeed < 0f)
-            {
-                _currentSpeed += _grip * currentStats.naturalDeceleration * Time.fixedDeltaTime;
-                _currentSpeed  = Mathf.Min(_currentSpeed, 0f);
-            }
+            _currentSpeed = Mathf.Lerp(_currentSpeed, 0, currentStats.naturalDeceleration);
         }
+        
+        
+        Vector3 targetHorizontalVelocity = transform.forward * _currentSpeed;
+        Vector3 currentHorizontalVelocity = Vector3.ProjectOnPlane(_rb.linearVelocity, transform.up);
+        Vector3 blendedHorizontal = Vector3.Lerp(currentHorizontalVelocity, targetHorizontalVelocity, _grip);
+        Vector3 verticalVelocity = Vector3.Project(_rb.linearVelocity, transform.up);
+
+        _rb.linearVelocity = blendedHorizontal + verticalVelocity;
     }
 
     // -- Steering ----------------------------------------------------------
     void HandleSteering(float input)
     {
-        if (Mathf.Abs(_currentSpeed) < currentStats.minSpeedToSteer) return;
-
-        float direction  = Mathf.Sign(_currentSpeed);
-        float speedRatio = Mathf.Abs(_currentSpeed) / currentStats.maxSpeed;
-        _currentSteerSpeed = Mathf.Lerp(_currentSteerSpeed, currentStats.maxSteer * input * direction, currentStats.handling);
+        float speedRatio = _rb.linearVelocity.magnitude / currentStats.maxSpeed;
+        _currentSteerSpeed = Mathf.Lerp(_currentSteerSpeed, currentStats.maxSteer * input, currentStats.handling);
         float turnAmount = _currentSteerSpeed * speedRatio * Time.fixedDeltaTime;
 
         transform.Rotate(Vector3.up, turnAmount, Space.World);
@@ -204,7 +196,7 @@ public class VehicleController : VehicleStats<VehicleStatsModifier>
     void ApplyLean(float steerInput)
     {
         // Scale lean by how fast we're going - no lean when nearly stopped
-        float speedRatio  = Mathf.Abs(_currentSpeed) / currentStats.maxSpeed;
+        float speedRatio  = _rb.linearVelocity.magnitude / currentStats.maxSpeed;
 
         // Lean LEFT when steering right (negative local Z = right tilt in Unity)
         // Flip sign so the top of the body rolls toward the inside of the turn
@@ -226,17 +218,6 @@ public class VehicleController : VehicleStats<VehicleStatsModifier>
         );
     }
 
-    // -- Push Rigidbody along the local X axis -----------------------------
-    void ApplyVelocity()
-    {
-        Vector3 horizontalVelocity = transform.forward * _currentSpeed;
-        _rb.linearVelocity = new Vector3(
-            horizontalVelocity.x,
-            _rb.linearVelocity.y,
-            horizontalVelocity.z
-        ) * _grip + _rb.linearVelocity * (1 - _grip);
-    }
-
     // -- Gizmo: red arrow = vehicle forward (local X) ----------------------
     void OnDrawGizmosSelected()
     {
@@ -247,7 +228,7 @@ public class VehicleController : VehicleStats<VehicleStatsModifier>
     // -- FOV changing based on speed -----------------------------
     void UpdateFov()
     {
-        float normalizedSpeed = Mathf.Clamp01(_currentSpeed / currentStats.maxSpeed);
+        float normalizedSpeed = Mathf.Clamp01(_rb.linearVelocity.magnitude / currentStats.maxSpeed);
         _cam.fieldOfView = _baseFov + normalizedSpeed * 20f;
     }
 

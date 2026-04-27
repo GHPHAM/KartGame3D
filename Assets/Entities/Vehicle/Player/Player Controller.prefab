@@ -239,16 +239,15 @@ MonoBehaviour:
     identifier: playerbase
     _maxHealth: 10
     _attackDamage: 1
-    _attackCooldown: 1
+    _attackCooldown: 0.2
     _ramDamage: 1
     _minRamSpeed: 1
     _maxSpeed: 20
-    _maxReverseSpeed: 10
-    _accelerationForce: 20
-    _brakeForce: 10
-    _naturalDeceleration: 4
+    _maxReverseSpeed: 0.2
+    _accelerationForce: 0.2
+    _brakeForce: 0.1
+    _naturalDeceleration: 0.02
     _maxSteer: 200
-    _minSpeedToSteer: 0.5
     _handling: 0.08
   currentStats:
     identifier: 
@@ -263,17 +262,16 @@ MonoBehaviour:
     _brakeForce: 0
     _naturalDeceleration: 0
     _maxSteer: 0
-    _minSpeedToSteer: 0
     _handling: 0
   modifiers: []
   bodyTransform: {fileID: 8032623499802316832}
   maxLeanAngle: 5
   leanSmoothing: 8
-  grip: 1
-  driftGripMultiplier: 0.01
+  grip: 0.1
+  driftGripMultiplier: 0.02
   driftTransitionSpeed: 0.15
   attackRoot: {fileID: 0}
-  firingProjectilePrefab: {fileID: 0}
+  firingProjectilePrefab: {fileID: 922423110327829901, guid: f7b7981c1af8e934c8cfabef8cde61a4, type: 3}
 --- !u!1 &2207849814675551171
 GameObject:
   m_ObjectHideFlags: 0

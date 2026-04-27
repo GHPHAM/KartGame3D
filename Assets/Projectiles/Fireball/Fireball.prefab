@@ -77,8 +77,8 @@ MonoBehaviour:
   damage: 1
   speed: 50
   lifetime: 10
-  autoTargetRange: 40
-  autoTargetMaxAngle: 20
+  autoTargetRange: 100
+  autoTargetMaxAngle: 10
   targetableLayers:
     serializedVersion: 2
     m_Bits: 8

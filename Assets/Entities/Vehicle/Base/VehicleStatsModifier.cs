@@ -44,9 +44,6 @@ namespace Entities.Vehicle.Modifiable
         [Tooltip("Max turn speed")]
         public float _maxSteer;
 
-        [Tooltip("Minimum speed required to steer")]
-        public float _minSpeedToSteer;
-
         [Tooltip("Speed at which player's turing reaches the steerDegreese")]
         public float _handling;
         
@@ -93,11 +90,6 @@ namespace Entities.Vehicle.Modifiable
             get => _maxSteer; 
             set => _maxSteer = value;
         }
-        public virtual float minSpeedToSteer 
-        {
-            get => _minSpeedToSteer; 
-            set => _minSpeedToSteer = value;
-        }
         public virtual float handling 
         {
             get => _handling; 
@@ -120,7 +112,6 @@ namespace Entities.Vehicle.Modifiable
             _brakeForce = other.brakeForce;
             _naturalDeceleration = other.naturalDeceleration;
             _maxSteer = other.maxSteer;
-            _minSpeedToSteer = other.minSpeedToSteer;
             _handling = other.handling;
         }
         
@@ -134,7 +125,6 @@ namespace Entities.Vehicle.Modifiable
             float brakeForce = 0,
             float naturalDeceleration = 0,
             float maxSteer = 0,
-            float minSpeedToSteer = 0,
             float handling = 0
             ) : base(baseStats)
         {
@@ -146,7 +136,6 @@ namespace Entities.Vehicle.Modifiable
             this.brakeForce = brakeForce;
             this.naturalDeceleration = naturalDeceleration;
             this.maxSteer = maxSteer;
-            this.minSpeedToSteer = minSpeedToSteer;
             this.handling = handling;
         }
         
@@ -167,7 +156,6 @@ namespace Entities.Vehicle.Modifiable
             brakeForce += other.brakeForce;
             naturalDeceleration += other.naturalDeceleration;
             maxSteer += other.maxSteer;
-            minSpeedToSteer += other.minSpeedToSteer;
             handling += other.handling;
             return this;
         }
@@ -183,7 +171,6 @@ namespace Entities.Vehicle.Modifiable
             brakeForce -= other.brakeForce;
             naturalDeceleration -= other.naturalDeceleration;
             maxSteer -= other.maxSteer;
-            minSpeedToSteer -= other.minSpeedToSteer;
             handling -= other.handling;
             return this;
         }
