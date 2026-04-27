@@ -2292,6 +2292,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2142224481}
     - target: {fileID: 4098562961284168639, guid: 0b0d31723b27fda4a852728b850cc160, type: 3}
+      propertyPath: baseStats._maxReverseSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4098562961284168639, guid: 0b0d31723b27fda4a852728b850cc160, type: 3}
       propertyPath: baseStats._minSpeedToSteer
       value: 0
       objectReference: {fileID: 0}
