@@ -79,8 +79,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61bf7b75cfcf281489295ab5d3b59aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TurretBehaviour
-  maxHealth: 10
   _health: 0
+  baseStats:
+    identifier: TurretBase
+    _maxHealth: 5
+    _attackDamage: 1
+    _attackCooldown: 1
+  currentStats:
+    identifier: 
+    _maxHealth: 0
+    _attackDamage: 0
+    _attackCooldown: 0
+  modifiers: []
   attackDamage: 2
   attackCooldown: 0.5
   _currentCooldown: 0

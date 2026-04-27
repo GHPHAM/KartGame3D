@@ -15,15 +15,16 @@ namespace Entities.Vehicle.Modifiable
 {
     
     [System.Serializable]
-    public class VehicleStatModifier
+    public class VehicleStatsModifier : AttackerStatsModifier
     {
-        // -------- Identifier ----------------------------------------
-        
-        //used for Equals
-        public string identifier; 
-        
         // -------- Internals ----------------------------------------
 
+        
+        [Tooltip("Amount of ram damage dealt when ramming into enemy")]
+        public int _ramDamage;
+
+        [Tooltip("Minimum speed to deal ram damage")]
+        public float _minRamSpeed;
 
         [Tooltip("Maximum speed player can reach")]
         public float _maxSpeed;
@@ -49,8 +50,19 @@ namespace Entities.Vehicle.Modifiable
         [Tooltip("Speed at which player's turing reaches the steerDegreese")]
         public float _handling;
         
+        
         // -------- Get/Set ----------------------------------------
         
+        public virtual int ramDamage
+        {
+            get => _ramDamage; 
+            set => _ramDamage = value;
+        }
+        public virtual float minRamSpeed
+        {
+            get => _minRamSpeed; 
+            set => _minRamSpeed = value;
+        }
         public virtual float maxSpeed
         {
             get => _maxSpeed; 
@@ -92,11 +104,16 @@ namespace Entities.Vehicle.Modifiable
             set => _handling = value;
         }
         
-        // -------- Constructor ----------------------------------------
+        // -------- Constructors ----------------------------------------
         
         //copy
-        public VehicleStatModifier(VehicleStatModifier other)
+        public VehicleStatsModifier(VehicleStatsModifier other) : base(other)
         {
+            if (other == null)
+                return;
+            
+            _ramDamage = other.ramDamage;
+            _minRamSpeed = other._minRamSpeed;
             _maxSpeed = other.maxSpeed;
             _maxReverseSpeed = other.maxReverseSpeed;
             _accelerationForce = other.accelerationForce;
@@ -107,7 +124,10 @@ namespace Entities.Vehicle.Modifiable
             _handling = other.handling;
         }
         
-        public VehicleStatModifier(
+        public VehicleStatsModifier(
+            EntityStatsModifier baseStats = null,
+            int ramDamage = 0, 
+            float minRamSpeed = 0, 
             float maxSpeed = 0, 
             float maxReverseSpeed = 0,
             float accelerationForce = 0,
@@ -116,8 +136,10 @@ namespace Entities.Vehicle.Modifiable
             float maxSteer = 0,
             float minSpeedToSteer = 0,
             float handling = 0
-            )
+            ) : base(baseStats)
         {
+            this.ramDamage = ramDamage;
+            this.minRamSpeed = minRamSpeed;
             this.maxSpeed = maxSpeed;
             this.maxReverseSpeed = maxReverseSpeed;
             this.accelerationForce = accelerationForce;
@@ -128,8 +150,17 @@ namespace Entities.Vehicle.Modifiable
             this.handling = handling;
         }
         
-        public VehicleStatModifier add(VehicleStatModifier other)
+        public override EntityStatsModifier clone() => new VehicleStatsModifier(this);
+        
+        
+        // -------- Methods ----------------------------------------
+
+        
+        public VehicleStatsModifier add(VehicleStatsModifier other)
         {
+            add((EntityStatsModifier)other);
+            ramDamage += other.ramDamage;
+            minRamSpeed += other.minRamSpeed;
             maxSpeed += other.maxSpeed;
             maxReverseSpeed += other.maxReverseSpeed;
             accelerationForce += other.accelerationForce;
@@ -141,8 +172,11 @@ namespace Entities.Vehicle.Modifiable
             return this;
         }
 
-        public VehicleStatModifier remove(VehicleStatModifier other)
+        public VehicleStatsModifier remove(VehicleStatsModifier other)
         {
+            remove((EntityStatsModifier)other);
+            ramDamage -= other.ramDamage;
+            minRamSpeed -= other.minRamSpeed;
             maxSpeed -= other.maxSpeed;
             maxReverseSpeed -= other.maxReverseSpeed;
             accelerationForce -= other.accelerationForce;
@@ -152,110 +186,6 @@ namespace Entities.Vehicle.Modifiable
             minSpeedToSteer -= other.minSpeedToSteer;
             handling -= other.handling;
             return this;
-        }
-
-        public class Builder
-        {
-            float _maxSpeed = 0;
-            float _maxReverseSpeed = 0;
-            float _accelerationForce = 0;
-            float _brakeForce = 0;
-            float _naturalDeceleration = 0;
-            float _steerSpeed = 0;
-            float _minSpeedToSteer = 0;
-            float _handling = 0;
-            
-            public Builder(
-                float maxSpeed = 0, 
-                float maxReverseSpeed = 0,
-                float accelerationForce = 0,
-                float brakeForce = 0,
-                float naturalDeceleration = 0,
-                float steerSpeed = 0,
-                float minSpeedToSteer = 0,
-                float handling = 0
-            )
-            {
-                _maxSpeed = maxSpeed;
-                _maxReverseSpeed = maxReverseSpeed;
-                _accelerationForce = accelerationForce;
-                _brakeForce = brakeForce;
-                _naturalDeceleration = naturalDeceleration;
-                _steerSpeed = steerSpeed;
-                _minSpeedToSteer = minSpeedToSteer;
-                _handling = handling;
-            }
-
-            public Builder maxSpeed(float maxSpeed)
-            {
-                _maxSpeed = maxSpeed;
-                return this;
-            }
-
-            public Builder maxReverseSpeed(float maxReverseSpeed)
-            {
-                _maxReverseSpeed = maxReverseSpeed;
-                return this;
-            }
-
-            public Builder accelerationForce(float accelerationForce)
-            {
-                _accelerationForce = accelerationForce;
-                return this;
-            }
-
-            public Builder brakeForce(float brakeForce)
-            {
-                _brakeForce = brakeForce;
-                return this;
-            }
-
-            public Builder naturalDeceleration(float naturalDeceleration)
-            {
-                _naturalDeceleration = naturalDeceleration;
-                return this;
-            }
-
-            public Builder steerSpeed(float steerSpeed)
-            {
-                _steerSpeed = steerSpeed;
-                return this;
-            }
-
-            public Builder minSpeedToSteer(float minSpeedToSteer)
-            {
-                _minSpeedToSteer= minSpeedToSteer;
-                return this;
-            }
-
-            public Builder handling(float handling)
-            {
-                _handling = handling;
-                return this;
-            }
-
-            public VehicleStatModifier Build()
-            {
-                return new VehicleStatModifier(
-                        _maxSpeed,
-                        _maxReverseSpeed,
-                        _accelerationForce,
-                        _brakeForce,
-                        _naturalDeceleration,
-                        _steerSpeed,
-                        _minSpeedToSteer,
-                        _handling
-                    );
-            }
-        }
-        
-        
-        public override bool Equals(object obj)
-        {
-            if (obj == null)
-                return false;
-            
-            return obj is VehicleStatModifier other && identifier.Equals(other.identifier);
         }
         
         

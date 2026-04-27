@@ -9,31 +9,30 @@
 *
 ****************************************************************/
 
+using Entities;
 using UnityEngine;
 
-public abstract class EnemyBase : EntityStats
+public abstract class AttackerStats<T> : EntityStats<T> where T : AttackerStatsModifier
 {
-    [Header("Enemy")]
-
-    //public
-    public int attackDamage = 2;
-    public float attackCooldown = 2;
+    [Header("Attacker")]
 
     [SerializeField] private float _currentCooldown;
 
     // Setup -----------------------------------
 
     //setup internals
-    protected virtual void Awake()
+    protected override void Awake()
     {
-        _currentCooldown = attackCooldown;
+        base.Awake();
+        _currentCooldown = currentStats.attackCooldown;
     }
 
 
     // Behaviour -----------------------------------
 
-    protected void FixedUpdate()
+    protected override void FixedUpdate()
     {
+        base.FixedUpdate();
         cooldownAttack();
     }
 
@@ -42,7 +41,7 @@ public abstract class EnemyBase : EntityStats
     {
         _currentCooldown += Time.fixedDeltaTime;
 
-        if(_currentCooldown > attackCooldown)
+        if(_currentCooldown > currentStats.attackCooldown)
         {
             _currentCooldown = 0;
             attack();
@@ -50,8 +49,11 @@ public abstract class EnemyBase : EntityStats
     }
 
 
-    //handles attack
-    protected abstract void attack();
+    //handles attack, does nothing for base class
+    protected virtual void attack()
+    {
+        return;
+    }
 
     public override void die()
     {

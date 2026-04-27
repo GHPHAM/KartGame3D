@@ -50,15 +50,15 @@ public class HUDController : MonoBehaviour
             SetHealthBarRatio(1f);  // default to full until player is ready
             return;
         }
-
-        float ratio = Mathf.Clamp01((float)player.health / (float)player.maxHealth);
+        
+        float ratio = Mathf.Clamp01((float)player.health / player.currentStats.maxHealth);
         SetHealthBarRatio(ratio);
     }
 
     // -- Called whenever VehicleController.damage() fires the event ---------
     void HandlePlayerDamaged(int currentHP, int maxHP)
     {
-        float ratio = Mathf.Clamp01((float)currentHP / (float)maxHP);
+        float ratio = Mathf.Clamp01((float)currentHP / maxHP);
         SetHealthBarRatio(ratio);
     }
 

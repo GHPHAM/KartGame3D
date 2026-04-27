@@ -1,13 +1,15 @@
 /***************************************************************
 *file: ProjectileBase.cs
 *author: Cole Harsch
-*class: CS 4700 – Game Development
+*class: CS 4700 ï¿½ Game Development
 *assignment: final program
 *date last modified: 4/18/26
 *
 *purpose: This houses the base stats and behavior for all projectiles
 *
 ****************************************************************/
+
+using Entities;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -51,7 +53,7 @@ public class ProjectileBase : MonoBehaviour
     //handles collision for trigger projectiles
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<EntityStats>(out var stats))
+        if (other.TryGetComponent<EntityStatsBase>(out var stats))
         {
             onHitEntity(stats);
         }
@@ -65,7 +67,7 @@ public class ProjectileBase : MonoBehaviour
     //handles collision for collider projectiles
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.TryGetComponent<EntityStats>(out var stats))
+        if (collision.gameObject.TryGetComponent<EntityStatsBase>(out var stats))
         {
             onHitEntity(stats);
         }
@@ -77,7 +79,7 @@ public class ProjectileBase : MonoBehaviour
 
 
     //called when the projectile hits an entity
-    protected virtual void onHitEntity(EntityStats entity)
+    protected virtual void onHitEntity(EntityStatsBase entity)
     {
         entity.damage(damage);
         Destroy(gameObject);

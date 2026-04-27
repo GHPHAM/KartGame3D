@@ -1,6 +1,7 @@
+using Entities;
 using UnityEngine;
 
-public class MeleeBehavior : EnemyBase
+public class MeleeBehavior : AttackerStats<AttackerStatsModifier>
 {
     [Header("Movement")]
     public float moveSpeed = 5f;
@@ -93,10 +94,10 @@ public class MeleeBehavior : EnemyBase
         if (distance > attackRange) return;
 
         // Deal damage if the player exposes an EntityStats (or similar) component
-        EntityStats playerStats = _player.GetComponent<EntityStats>();
+        EntityStatsBase playerStats = _player.GetComponent<EntityStatsBase>();
         if (playerStats != null)
         {
-            playerStats.damage(attackDamage);
+            playerStats.damage(currentStats.attackDamage);
         }
     }
 }

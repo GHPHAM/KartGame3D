@@ -5,19 +5,20 @@
 *assignment: final program
 *date last modified: 4/18/26
 *
-*purpose: This keeps track of the player's current stats
+*purpose: This keeps track of a vehicles current stats
+ * (mostly done through inheritance and VehicleStatsModifier class)
 *
 ****************************************************************/
 
+using System.Collections.Generic;
 using Entities.Vehicle.Modifiable;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [System.Serializable]
-public class VehicleBase : EntityStats
+public class VehicleStats<T> : AttackerStats<T> where T : VehicleStatsModifier
 {
-    public virtual VehicleStatModifier vehicleStats { get; }
-
     public override void die()
     {
         Destroy(gameObject);

@@ -1,16 +1,18 @@
 /***************************************************************
 *file: TurretBehaviour.cs
 *author: Cole Harsch
-*class: CS 4700 – Game Development
+*class: CS 4700 ï¿½ Game Development
 *assignment: final program
 *date last modified: 4/18/26
 *
-*purpose: This handles the behaviour of the turret enemy
+*purpose: This handles the behavior of the turret enemy
 *
 ****************************************************************/
+
+using Entities;
 using UnityEngine;
 
-public class TurretBehaviour : EnemyBase
+public class TurretBehaviour : AttackerStats<AttackerStatsModifier>
 {
     [Header("Turret")]
 
@@ -27,7 +29,7 @@ public class TurretBehaviour : EnemyBase
 
 
     // Setup -----------------------------------
-    override protected void Awake()
+    protected override void Awake()
     {
         //base setup
         base.Awake();

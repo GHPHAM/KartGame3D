@@ -46,8 +46,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25007005d796be348b31431bcf0ae69d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeBehavior
-  maxHealth: 10
   _health: 10
+  baseStats:
+    identifier: 
+    _maxHealth: 5
+    _attackDamage: 1
+    _attackCooldown: 1
+  currentStats:
+    identifier: 
+    _maxHealth: 0
+    _attackDamage: 0
+    _attackCooldown: 0
+  modifiers: []
   attackDamage: 2
   attackCooldown: 2
   _currentCooldown: 0

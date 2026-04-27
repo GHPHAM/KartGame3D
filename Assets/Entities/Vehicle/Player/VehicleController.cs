@@ -35,7 +35,7 @@ using UnityEngine.InputSystem;
 ///   The root Rigidbody stays flat; only the body visually tilts.
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
-public class VehicleController : ModifiableVehicleBase
+public class VehicleController : VehicleStats<VehicleStatsModifier>
 {
     [Header("Lean / Body Tilt")]
     [Tooltip("Child GameObject that holds the visible mesh. Leave empty to lean the root (not recommended).")]
@@ -70,8 +70,9 @@ public class VehicleController : ModifiableVehicleBase
     private float  _baseFov;
     private float  _grip;
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         if(singleton == null) { singleton = this; }
 
         _rb = GetComponent<Rigidbody>();
@@ -89,22 +90,21 @@ public class VehicleController : ModifiableVehicleBase
             bodyTransform = transform;
     }
 
-    void FixedUpdate()
+    protected override void FixedUpdate()
     {
+        base.FixedUpdate();
+        
         if (_kb == null) { _kb = Keyboard.current; return; }
 
         float throttleInput = GetThrottleInput();
         float steerInput    = GetSteerInput();
 
-        //get a copy of the current stats through the get of vehicleStats
-        VehicleStatModifier currentStats = vehicleStats;
-
         HandleGrip();
-        HandleThrottle(throttleInput, currentStats);
-        HandleSteering(steerInput, currentStats);
+        HandleThrottle(throttleInput);
+        HandleSteering(steerInput);
         ApplyVelocity();
-        ApplyLean(steerInput, currentStats);
-        UpdateFov(currentStats);
+        ApplyLean(steerInput);
+        UpdateFov();
     }
 
     // -- Input helpers ------------------------------------------------------
@@ -141,7 +141,7 @@ public class VehicleController : ModifiableVehicleBase
     }
 
     // -- Throttle & natural deceleration -----------------------------------
-    void HandleThrottle(float input, VehicleStatModifier currentStats)
+    void HandleThrottle(float input)
     {
         if (input > 0f)
         {
@@ -172,7 +172,7 @@ public class VehicleController : ModifiableVehicleBase
     }
 
     // -- Steering ----------------------------------------------------------
-    void HandleSteering(float input, VehicleStatModifier currentStats)
+    void HandleSteering(float input)
     {
         if (Mathf.Abs(_currentSpeed) < currentStats.minSpeedToSteer) return;
 
@@ -185,7 +185,7 @@ public class VehicleController : ModifiableVehicleBase
     }
 
     // -- Lean / body tilt --------------------------------------------------
-    void ApplyLean(float steerInput, VehicleStatModifier currentStats)
+    void ApplyLean(float steerInput)
     {
         // Scale lean by how fast we're going - no lean when nearly stopped
         float speedRatio  = Mathf.Abs(_currentSpeed) / currentStats.maxSpeed;
@@ -229,7 +229,7 @@ public class VehicleController : ModifiableVehicleBase
     }
 
     // -- FOV changing based on speed -----------------------------
-    void UpdateFov(VehicleStatModifier currentStats)
+    void UpdateFov()
     {
         float normalizedSpeed = Mathf.Clamp01(_currentSpeed / currentStats.maxSpeed);
         _cam.fieldOfView = _baseFov + normalizedSpeed * 20f;
@@ -248,10 +248,9 @@ public class VehicleController : ModifiableVehicleBase
                 Debug.Log($"Applying {data.powerUpName}");
 
                 //build speed boost modifier
-                VehicleStatModifier speedMod = new VehicleStatModifier.Builder().
-                    maxSpeed(data.magnitude).
-                    accelerationForce(data.magnitude/2).
-                    Build();
+                VehicleStatsModifier speedMod = new VehicleStatsModifier();
+                speedMod.maxSpeed = data.magnitude;
+                speedMod.accelerationForce = data.magnitude / 2;
 
                 speedMod.identifier = data.powerUpName; //set identifier
 
@@ -279,7 +278,7 @@ public class VehicleController : ModifiableVehicleBase
 
     //function: removeModifierAfterTime
     //purpose: to remove a stat modifier after a certain duration, used for temporary powerups
-    private System.Collections.IEnumerator removeModifierAfterTime(VehicleStatModifier mod, float time, string powerUpName)
+    private System.Collections.IEnumerator removeModifierAfterTime(VehicleStatsModifier mod, float time, string powerUpName)
     {
         yield return new WaitForSeconds(time);
         removeModifier(mod);
@@ -299,8 +298,8 @@ public class VehicleController : ModifiableVehicleBase
     {
         base.damage(damage);
 
-        //Debug.Log($"[DEBUG] Player took {damage} damage | HP: {health}/{maxHealth}");
+        //Debug.Log($"[DEBUG] Player took {damage} damage | HP: {health}/{currentStats.maxHealth}");
 
-        HUDController.NotifyDamage(health, maxHealth);
+        HUDController.NotifyDamage(_health, currentStats.maxHealth);
     }
 }
