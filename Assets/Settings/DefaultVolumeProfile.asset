@@ -146,6 +146,25 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+--- !u!114 &-7058087636094761410
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e47c94badde609488109a5d5d69fe1c, type: 3}
+  m_Name: PixelationVolumeVolumeComponent
+  m_EditorClassIdentifier: Assembly-CSharp::PixelationVolumeVolumeComponent
+  active: 1
+  intensity:
+    m_OverrideState: 1
+    m_Value: 1
+  pixelSize:
+    m_OverrideState: 1
+    m_Value: 10
 --- !u!114 &-6335409530604852063
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -468,6 +487,33 @@ MonoBehaviour:
   - {fileID: -6288072647309666549}
   - {fileID: 7518938298396184218}
   - {fileID: -1410297666881709256}
+  - {fileID: -7058087636094761410}
+--- !u!114 &839932217626649178
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d09463470983c0b4db7eb6e67f24f6c6, type: 3}
+  m_Name: StaticEffect
+  m_EditorClassIdentifier: Assembly-CSharp::StaticEffect
+  active: 1
+  <displayName>k__BackingField: 
+  StaticSize:
+    <fieldHash>k__BackingField: -1559271776
+    m_OverrideState: 1
+    m_Value: 1000
+  StaticOffset:
+    <fieldHash>k__BackingField: -1319921384
+    m_OverrideState: 1
+    m_Value: 1
+  Active:
+    <fieldHash>k__BackingField: -1080570992
+    m_OverrideState: 1
+    m_Value: 0
 --- !u!114 &853819529557874667
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -535,6 +581,28 @@ MonoBehaviour:
   chromaticAbberationIntensity:
     m_OverrideState: 1
     m_Value: 0.5
+--- !u!114 &928350969848910739
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b418137be9389849b5485cdd6c9a9e5, type: 3}
+  m_Name: PixelationEffect
+  m_EditorClassIdentifier: Assembly-CSharp::PixelationEffect
+  active: 1
+  <displayName>k__BackingField: 
+  Pixels:
+    <fieldHash>k__BackingField: 1896821216
+    m_OverrideState: 1
+    m_Value: 300
+  Active:
+    <fieldHash>k__BackingField: 2136171608
+    m_OverrideState: 1
+    m_Value: 0
 --- !u!114 &1052315754049611418
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -776,6 +844,28 @@ MonoBehaviour:
     m_Value: {fileID: 0}
     dimension: 1
   contribution:
+    m_OverrideState: 1
+    m_Value: 0
+--- !u!114 &2185872718790040055
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 138201c84de35c7469bbfe7e1248c7a3, type: 3}
+  m_Name: CreepEffect
+  m_EditorClassIdentifier: Assembly-CSharp::CreepEffect
+  active: 1
+  <displayName>k__BackingField: 
+  Size:
+    <fieldHash>k__BackingField: 1791633712
+    m_OverrideState: 1
+    m_Value: 1000
+  Active:
+    <fieldHash>k__BackingField: 2030984104
     m_OverrideState: 1
     m_Value: 0
 --- !u!114 &3959858460715838825
