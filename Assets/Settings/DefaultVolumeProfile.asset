@@ -22,6 +22,25 @@ MonoBehaviour:
   gain:
     m_OverrideState: 1
     m_Value: {x: 1, y: 1, z: 1, w: 0}
+--- !u!114 &-8612552400945698839
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d278f062acd3e34f8cdaf5f3d622126, type: 3}
+  m_Name: CellVolumeComponent
+  m_EditorClassIdentifier: Assembly-CSharp::CellVolumeComponent
+  active: 1
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0
+  strength:
+    m_OverrideState: 1
+    m_Value: 0
 --- !u!114 &-8270506406425502121
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -161,10 +180,10 @@ MonoBehaviour:
   active: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   pixelSize:
     m_OverrideState: 1
-    m_Value: 10
+    m_Value: 640
 --- !u!114 &-6335409530604852063
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -488,6 +507,7 @@ MonoBehaviour:
   - {fileID: 7518938298396184218}
   - {fileID: -1410297666881709256}
   - {fileID: -7058087636094761410}
+  - {fileID: -8612552400945698839}
 --- !u!114 &839932217626649178
 MonoBehaviour:
   m_ObjectHideFlags: 3

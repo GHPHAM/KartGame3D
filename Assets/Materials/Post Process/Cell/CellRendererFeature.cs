@@ -5,7 +5,7 @@ using UnityEngine.Rendering.Universal;
 
 // Create a Scriptable Renderer Feature that implements a post-processing effect when the camera is inside a custom volume.
 // For more information about creating scriptable renderer features, refer to https://docs.unity3d.com/Manual/urp/customizing-urp.html
-public sealed class PixelationVolumeRendererFeature : ScriptableRendererFeature
+public sealed class CellRendererFeature : ScriptableRendererFeature
 {
     #region FEATURE_FIELDS
 
@@ -32,6 +32,7 @@ public sealed class PixelationVolumeRendererFeature : ScriptableRendererFeature
         {
             m_Material = UnityEditor.AssetDatabase.LoadAssetAtPath<Material>("Packages/com.unity.render-pipelines.universal/Runtime/Materials/FullscreenInvertColors.mat");
         }
+        
 #endif
 
         if(m_Material)
@@ -50,12 +51,14 @@ public sealed class PixelationVolumeRendererFeature : ScriptableRendererFeature
             return;
 
         // Skip rendering if the camera is outside the custom volume.
-        PixelationVolumeVolumeComponent myVolume = VolumeManager.instance.stack?.GetComponent<PixelationVolumeVolumeComponent>();
+        CellVolumeComponent myVolume = VolumeManager.instance.stack?.GetComponent<CellVolumeComponent>();
         if (myVolume == null || !myVolume.IsActive())
             return;
 
         //set up parameters
-        m_Material.SetFloat("_PixelSize", myVolume.pixelSize.value);
+        m_Material.SetFloat("_Strength", myVolume.strength.value);
+        
+        
         
         // Specify when the effect will execute during the frame.
         // For a post-processing effect, the injection point is usually BeforeRenderingTransparents, BeforeRenderingPostProcessing, or AfterRenderingPostProcessing.
@@ -138,7 +141,7 @@ public sealed class PixelationVolumeRendererFeature : ScriptableRendererFeature
 
             // Set the material properties based on the blended values of the custom volume.
             // For more information, refer to https://docs.unity3d.com/Manual/urp/post-processing/custom-post-processing-with-volume.html
-            PixelationVolumeVolumeComponent myVolume = VolumeManager.instance.stack?.GetComponent<PixelationVolumeVolumeComponent>();
+            CellVolumeComponent myVolume = VolumeManager.instance.stack?.GetComponent<CellVolumeComponent>();
             if (myVolume != null)
             {
                 float finalIntensity = myVolume.intensity.overrideState ? myVolume.intensity.value : 0f;

@@ -50,6 +50,25 @@ MonoBehaviour:
   dirtIntensity:
     m_OverrideState: 0
     m_Value: 0
+--- !u!114 &-7263105305323223851
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d278f062acd3e34f8cdaf5f3d622126, type: 3}
+  m_Name: CellVolumeComponent
+  m_EditorClassIdentifier: Assembly-CSharp::CellVolumeComponent
+  active: 1
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0.217
+  strength:
+    m_OverrideState: 1
+    m_Value: 0.234
 --- !u!114 &-3357603926938260329
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -115,6 +134,7 @@ MonoBehaviour:
   - {fileID: 7391319092446245454}
   - {fileID: -3357603926938260329}
   - {fileID: -234562883796588273}
+  - {fileID: -7263105305323223851}
 --- !u!114 &849379129802519247
 MonoBehaviour:
   m_ObjectHideFlags: 3
