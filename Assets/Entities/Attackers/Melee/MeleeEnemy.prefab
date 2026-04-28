@@ -55,11 +55,13 @@ MonoBehaviour:
     _maxHealth: 5
     _attackDamage: 1
     _attackCooldown: 1
+    _scoreValue: 40
   currentStats:
     identifier: 
     _maxHealth: 0
     _attackDamage: 0
     _attackCooldown: 0
+    _scoreValue: 0
   modifiers: []
   moveSpeed: 5
   attackRange: 1.2
