@@ -27,13 +27,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 554075423795912061}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -4.92, y: 1.96, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.96, z: -4.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4989842316753040405}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &4439234024410938344
 Camera:
   m_ObjectHideFlags: 0
@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 4165082584901125471}
   - component: {fileID: 4098562961284168639}
   m_Layer: 3
-  m_Name: Player Controller
+  m_Name: Controller
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -171,6 +171,7 @@ Transform:
   m_Children:
   - {fileID: 4493082318577733991}
   - {fileID: 8032623499802316832}
+  - {fileID: 2405942462081453986}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &4817995357828187745
@@ -243,7 +244,7 @@ MonoBehaviour:
     _ramDamage: 1
     _minRamSpeed: 1
     _maxSpeed: 20
-    _maxReverseSpeed: 0.2
+    _maxReverseSpeed: 20
     _accelerationForce: 0.2
     _brakeForce: 0.1
     _naturalDeceleration: 0.02
@@ -268,9 +269,9 @@ MonoBehaviour:
   maxLeanAngle: 5
   leanSmoothing: 8
   grip: 0.1
-  driftGripMultiplier: 0.02
+  driftGripMultiplier: 0.04
   driftTransitionSpeed: 0.15
-  attackRoot: {fileID: 0}
+  attackRoot: {fileID: 2405942462081453986}
   firingProjectilePrefab: {fileID: 922423110327829901, guid: f7b7981c1af8e934c8cfabef8cde61a4, type: 3}
 --- !u!1 &2207849814675551171
 GameObject:
@@ -384,3 +385,34 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &4340527915052429368
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2405942462081453986}
+  m_Layer: 3
+  m_Name: Shoot Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2405942462081453986
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4340527915052429368}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4989842316753040405}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

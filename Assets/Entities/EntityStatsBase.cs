@@ -22,6 +22,7 @@ namespace Entities
         [SerializeField] protected Transform _hitTarget;
         [SerializeField] protected int _health;
         
+        public event System.Action onDeath = delegate { };
         
         // ---- Get/Set ----------------------------------
 
@@ -43,7 +44,9 @@ namespace Entities
             set
             {
                 if(value < 0)
-                    die();
+                { 
+                    onDeath();
+                }
                 
                 _health = value;
             }
@@ -55,6 +58,8 @@ namespace Entities
         {
             if (_hitTarget == null)
                 _hitTarget = transform;
+
+            onDeath = die;
         }
         
         
