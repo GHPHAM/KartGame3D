@@ -44,7 +44,7 @@ namespace Entities
             set
             {
                 if(value < 0)
-                { 
+                {
                     onDeath();
                 }
                 
@@ -59,7 +59,7 @@ namespace Entities
             if (_hitTarget == null)
                 _hitTarget = transform;
 
-            onDeath = die;
+            onDeath += die;
         }
         
         
@@ -70,6 +70,10 @@ namespace Entities
         }
 
         //entity death (health = 0)
-        public abstract void die();
+        public virtual void die()
+        {
+            Debug.Log("Dying");
+            Destroy(gameObject);
+        }
     }
 }

@@ -54,6 +54,8 @@ public abstract class EntityStats<T> : EntityStatsBase where T : EntityStatsModi
     
     protected virtual void Awake()
     {
+        base.Awake();
+        
         //calculate stats once every frame
         currentStats = calculateStats();
     }

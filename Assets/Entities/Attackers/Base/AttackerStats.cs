@@ -40,6 +40,8 @@ public abstract class AttackerStats<T> : EntityStats<T> where T : AttackerStatsM
 
     public override void die()
     {
+        Debug.Log("Kill notifies");
+        
         // Award points equal to this entity's scoreValue before destroying it
         ScoreManager.NotifyKill(currentStats.scoreValue);
 
