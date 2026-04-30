@@ -1,11 +1,11 @@
 /***************************************************************
 *file: EnemyBase.cs
 *author: Cole Harsch
-*class: CS 4700 � Game Development
+*class: CS 4700 – Game Development
 *assignment: final program
-*date last modified: 4/18/26
+*date last modified: 4/28/26
 *
-*purpose: This houses the base stats for all enimes and some basic mechanics
+*purpose: This houses the base stats for all enemies and some basic mechanics
 *
 ****************************************************************/
 
@@ -18,7 +18,7 @@ public abstract class AttackerStats<T> : EntityStats<T> where T : AttackerStatsM
 
     private double lastAttackTime = 0;
 
-    
+
     // Behaviour -----------------------------------
 
 
@@ -40,7 +40,10 @@ public abstract class AttackerStats<T> : EntityStats<T> where T : AttackerStatsM
 
     public override void die()
     {
-        //enemy is dead here, temp destroy but maybe add cool effects here later
+        // Award points equal to this entity's scoreValue before destroying it
+        ScoreManager.NotifyKill(currentStats.scoreValue);
+
+        // Enemy is dead – temp destroy but maybe add cool effects here later
         Destroy(gameObject);
     }
 }

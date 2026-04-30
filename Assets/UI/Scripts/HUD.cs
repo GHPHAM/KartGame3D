@@ -10,6 +10,9 @@ public class HUDController : MonoBehaviour
 
     // -- Internals ----------------------------------------------------------
     private VisualElement _healthBar;   // the green "Health" fill element
+    private Label _scoreLabel;          // the "Score:" label in ScoreWrapper
+
+    private int _score = 0;
 
     // -- Unity event: called once the UI document is fully built ------------
     void OnEnable()
@@ -26,16 +29,31 @@ public class HUDController : MonoBehaviour
             return;
         }
 
+        // Grab the score label by the name defined in HUD.uxml
+        _scoreLabel = root.Q<Label>("Score");
+
+        if (_scoreLabel == null)
+        {
+            Debug.LogError("[HUDController] Could not find 'Score' label in HUD.uxml.");
+        }
+
         // Listen for damage events fired by VehicleController
         OnPlayerDamaged += HandlePlayerDamaged;
 
+        // Listen for kill events fired through ScoreManager
+        ScoreManager.OnEnemyKilled += HandleEnemyKilled;
+
         // Initialize the bar using the player's current stats
         InitializeHealthBar();
+
+        // Initialize score display
+        UpdateScoreLabel();
     }
 
     void OnDisable()
     {
         OnPlayerDamaged -= HandlePlayerDamaged;
+        ScoreManager.OnEnemyKilled -= HandleEnemyKilled;
     }
 
     // -- Initialize bar as currentHealth / maxHealth ratio ------------------
@@ -50,7 +68,7 @@ public class HUDController : MonoBehaviour
             SetHealthBarRatio(1f);  // default to full until player is ready
             return;
         }
-        
+
         float ratio = Mathf.Clamp01((float)player.health / player.currentStats.maxHealth);
         SetHealthBarRatio(ratio);
     }
@@ -62,6 +80,13 @@ public class HUDController : MonoBehaviour
         SetHealthBarRatio(ratio);
     }
 
+    // -- Called whenever an enemy dies; awards its scoreValue ---------------
+    void HandleEnemyKilled(int scoreValue)
+    {
+        _score += scoreValue;
+        UpdateScoreLabel();
+    }
+
     // -- Set the green bar's width as a percentage of its parent ------------
     void SetHealthBarRatio(float ratio)
     {
@@ -69,6 +94,13 @@ public class HUDController : MonoBehaviour
 
         // Width is expressed as a percentage of the grey background parent
         _healthBar.style.width = new StyleLength(new Length(ratio * 100f, LengthUnit.Percent));
+    }
+
+    // -- Refresh the score text shown to the player -------------------------
+    void UpdateScoreLabel()
+    {
+        if (_scoreLabel == null) return;
+        _scoreLabel.text = $"Score: {_score}";
     }
 
     // -- Static helper so VehicleController can fire the event easily -------

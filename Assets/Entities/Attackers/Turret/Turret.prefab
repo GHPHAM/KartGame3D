@@ -81,17 +81,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TurretBehaviour
   _hitTarget: {fileID: 9164561937544775830}
-  _health: 0
+  _health: 10
   baseStats:
     identifier: TurretBase
     _maxHealth: 5
     _attackDamage: 1
     _attackCooldown: 1
+    _scoreValue: 60
   currentStats:
     identifier: 
     _maxHealth: 0
     _attackDamage: 0
     _attackCooldown: 0
+    _scoreValue: 0
   modifiers: []
   projectile: {fileID: 922423110327829901, guid: f7b7981c1af8e934c8cfabef8cde61a4, type: 3}
   shootPoint: {fileID: 4526950795554584959}
@@ -247,7 +249,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 36ce4e1ff423b7148bb497be59815a5e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -723,7 +725,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1114
+  m_VersionIndex: 1016
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1031,7 +1033,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 450
+  m_VersionIndex: 516
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []

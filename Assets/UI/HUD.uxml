@@ -4,4 +4,7 @@
             <ui:VisualElement name="Health" style="flex-grow: 1; width: 100%; background-color: rgb(76, 233, 89);"/>
         </ui:VisualElement>
     </ui:VisualElement>
+    <ui:VisualElement name="ScoreWrapper" style="flex-grow: 1; background-color: rgb(140, 32, 32); width: 25%; height: 4%; position: absolute; bottom: auto; aspect-ratio: auto; top: 0;">
+        <ui:Label text="Score:" name="Score" style="height: 36px; color: rgb(255, 255, 255); font-size: 35px; top: -9px;"/>
+    </ui:VisualElement>
 </ui:UXML>
