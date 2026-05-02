@@ -130,18 +130,12 @@ public class ProjectileBase : MonoBehaviour
         {
             onHitEntity(stats);
         }
-        else
-        {
-            onHitWall(other);
-        }
     }
 
 
     //handles collision for collider projectiles
     private void OnCollisionEnter(Collision collision)
     {
-        
-        
         //if the owner is being hit, and it is still in grace time don't do anything
         if (_owner != null && collision.transform.IsChildOf(_owner) && _spawnTime + ownerGracePeriod > Time.time)
         {
