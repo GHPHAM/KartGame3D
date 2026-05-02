@@ -11,6 +11,8 @@
 *GameObject, which must also have a Rigidbody component.
 *
 ****************************************************************/
+
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using System.ComponentModel;
 using Entities.Vehicle.Modifiable;
@@ -52,6 +54,9 @@ public class VehicleController : VehicleStats<VehicleStatsModifier>
     public float  animSpeedTransition = .1f;
 
     [Header("Grip")]
+    
+    [Tooltip("How much velocity is affected by your steering")]
+    public List<ParticleSystem> driftParticleSystems =  new List<ParticleSystem>();
     
     [Tooltip("How much velocity is affected by your steering")]
     public float grip = .1f;
@@ -187,6 +192,21 @@ public class VehicleController : VehicleStats<VehicleStatsModifier>
                 grip,
             driftTransitionSpeed
             );
+
+        if (driftInput)
+        {
+            foreach (var system in driftParticleSystems)
+            {
+                system.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            foreach (var system in driftParticleSystems)
+            {
+                system.gameObject.SetActive(false);
+            }
+        }
     }
 
     // -- Throttle & natural deceleration -----------------------------------
