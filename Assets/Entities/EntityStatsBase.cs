@@ -67,6 +67,8 @@ namespace Entities
         public virtual void damage(int damage)
         {
             health -= damage;
+            
+            
         }
 
         //entity death (health = 0)

@@ -26,6 +26,9 @@ public class ProjectileBase : MonoBehaviour
     public float autoTargetMaxAngle = 10f;
     public LayerMask targetableLayers;
     public LayerMask collidableLayers;
+    
+    [Header("Indicator")]
+    public GameObject damageIndicator;
 
     //internals
     [Header("Internals")]
@@ -156,6 +159,10 @@ public class ProjectileBase : MonoBehaviour
     //called when the projectile hits an entity
     protected virtual void onHitEntity(EntityStatsBase entity)
     {
+        if (Instantiate(damageIndicator, entity.hitTarget.position, entity.hitTarget.rotation).TryGetComponent(out DamageText text))
+        {
+            text.setText(damage.ToString());
+        }
         entity.damage(damage);
         Destroy(gameObject);
     }

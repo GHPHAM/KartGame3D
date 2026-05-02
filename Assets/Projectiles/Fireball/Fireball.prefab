@@ -85,6 +85,7 @@ MonoBehaviour:
   collidableLayers:
     serializedVersion: 2
     m_Bits: 63
+  damageIndicator: {fileID: 6846342651175833494, guid: 4dd76737a977dc24d9bbfb6571990dc4, type: 3}
   ownerGracePeriod: 0.5
   homingRange: 0
 --- !u!135 &5755926532168391611
