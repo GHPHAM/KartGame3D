@@ -64,7 +64,10 @@ public class VehicleController : VehicleStats<VehicleStatsModifier>
 
     [Header("Animation")]
     public Animator bodyAnimator;
-    
+
+    [Header("Gravity")]
+    public float gravityScale = 15f;
+
     [Header("Attacking")]
 
     [Tooltip("The sopt a which the firing projectile starts from")]
@@ -108,6 +111,8 @@ public class VehicleController : VehicleStats<VehicleStatsModifier>
         // Fall back to the root transform if no body is assigned
         if (bodyTransform == null)
             bodyTransform = transform;
+
+        _rb.useGravity = false;
     }
 
     protected override void FixedUpdate()
@@ -146,6 +151,9 @@ public class VehicleController : VehicleStats<VehicleStatsModifier>
         );
         
         bodyAnimator.SetBool("Drift", driftInput);
+
+        // Apply custom gravity
+        _rb.AddForce(Vector3.down * gravityScale, ForceMode.Acceleration);
     }
 
     // -- Input helpers ------------------------------------------------------
