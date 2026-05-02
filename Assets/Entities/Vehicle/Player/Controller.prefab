@@ -270,6 +270,7 @@ MonoBehaviour:
   bodyTransform: {fileID: 5660618240591663959}
   maxLeanAngle: 5
   leanSmoothing: 8
+  animSpeedTransition: 0.2
   grip: 0.1
   driftGripMultiplier: 0.04
   driftTransitionSpeed: 0.15

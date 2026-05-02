@@ -47,6 +47,9 @@ public class VehicleController : VehicleStats<VehicleStatsModifier>
 
     [Tooltip("How quickly the body leans into / recovers from a turn (higher = snappier)")]
     public float leanSmoothing = 8f;
+    
+    [Tooltip("How fast the anmation keeps up with the currentSpeed")]
+    public float  animSpeedTransition = .1f;
 
     [Header("Grip")]
     
@@ -76,6 +79,7 @@ public class VehicleController : VehicleStats<VehicleStatsModifier>
     // -- internals ----------------------------------------------------------
     private Rigidbody _rb;
     private float     _currentSpeed;
+    private float     _animLerpSpeed;
     private float     _currentSteer;
     private float     _currentLeanAngle;   // tracks smoothed lean value
     private Keyboard  _kb;
@@ -126,13 +130,19 @@ public class VehicleController : VehicleStats<VehicleStatsModifier>
         UpdateFov();
         
         //update animator
-        Debug.Log(_currentSteer + " " + currentStats.maxSteer);
-        bodyAnimator.SetFloat("Steer", _currentSteer / 450);
+        bodyAnimator.SetFloat("Steer", _currentSteer / 400);
+
+        _animLerpSpeed = Mathf.Lerp(
+            _animLerpSpeed,
+            _currentSpeed >= 0
+                ? _rb.linearVelocity.magnitude / currentStats.maxSpeed
+                : _rb.linearVelocity.magnitude / -currentStats.maxReverseSpeed,
+            animSpeedTransition
+        );
+        
         bodyAnimator.SetFloat(
             "Speed",
-            _currentSpeed >= 0 ? 
-                _currentSpeed / currentStats.maxSpeed :
-                _currentSpeed / currentStats.maxReverseSpeed
+            _animLerpSpeed
         );
         
         bodyAnimator.SetBool("Drift", driftInput);
