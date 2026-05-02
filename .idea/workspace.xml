@@ -2,46 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4f8c0233-f4ed-4420-a636-5a7a22a55d62" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Entities/Attackers/Melee/Mesh/GooNew.fbx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Entities/Attackers/Melee/Mesh/GooNew.fbx.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Entities/Vehicle/Player/the_knight_guy_wKart.fbx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Entities/Vehicle/Player/the_knight_guy_wKart.fbx.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Entities/Vehicle/Player/the_knight_guy_wKartF.fbx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Entities/Vehicle/Player/the_knight_guy_wKartF.fbx.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Materials/Common.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Materials/Common/Diamond.mat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Materials/Common/Diamond.mat.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Materials/Common/Red.mat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Materials/Common/Red.mat.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Materials/Common/Simple Mat.shadergraph" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Materials/Common/Simple Mat.shadergraph.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Materials/Terrain.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Materials/Terrain/Cave Dirt.terrainlayer" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Materials/Terrain/Cave Dirt.terrainlayer.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Materials/Terrain/Cave Rock.terrainlayer" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Materials/Terrain/Cave Rock.terrainlayer.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Models/Pickups/diamond prefab.prefab" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Models/Pickups/diamond prefab.prefab.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scenes/DungeonScene.unity" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scenes/DungeonScene.unity.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/ScoreManager.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/ScoreManager.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Terrain.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Terrain/Cave Terrain.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Terrain/Cave Terrain.asset.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Blender Files/the_knight_guy_wKartF.blend" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Entities/Attackers/Base/AttackerStats.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Entities/Attackers/Base/AttackerStats.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Entities/Attackers/Base/AttackerStatsModifier.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Entities/Attackers/Base/AttackerStatsModifier.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Entities/Attackers/Melee/MeleeEnemy.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Entities/Attackers/Melee/MeleeEnemy.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Entities/Attackers/Turret/Turret.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Entities/Attackers/Turret/Turret.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Entities/Vehicle/Player/Controller.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Entities/Vehicle/Player/Controller.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI/HUD.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI/HUD.uxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI/Scripts/HUD.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI/Scripts/HUD.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Blender Files/Goo.blend" beforeDir="false" afterPath="$PROJECT_DIR$/Blender Files/Goo.blend" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Blender Files/the_knight_guy.blend" beforeDir="false" afterPath="$PROJECT_DIR$/Blender Files/the_knight_guy.blend" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Blender Files/the_knight_guy_wKart.blend" beforeDir="false" afterPath="$PROJECT_DIR$/Blender Files/the_knight_guy_wKart.blend" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,14 +32,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Merging master"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;
   }
-}]]></component>
+}</component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="4f8c0233-f4ed-4420-a636-5a7a22a55d62" name="Changes" comment="" />

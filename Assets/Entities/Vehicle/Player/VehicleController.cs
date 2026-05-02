@@ -59,7 +59,10 @@ public class VehicleController : VehicleStats<VehicleStatsModifier>
     [Tooltip("How fast you change from drift grip to regular grip")]
     public float driftTransitionSpeed = .2f;
 
-    [Header("Grip")]
+    [Header("Animation")]
+    public Animator bodyAnimator;
+    
+    [Header("Attacking")]
 
     [Tooltip("The sopt a which the firing projectile starts from")]
     public Transform attackRoot;
@@ -73,7 +76,7 @@ public class VehicleController : VehicleStats<VehicleStatsModifier>
     // -- internals ----------------------------------------------------------
     private Rigidbody _rb;
     private float     _currentSpeed;
-    private float     _currentSteerSpeed;
+    private float     _currentSteer;
     private float     _currentLeanAngle;   // tracks smoothed lean value
     private Keyboard  _kb;
     private Mouse  _mouse;
@@ -109,17 +112,30 @@ public class VehicleController : VehicleStats<VehicleStatsModifier>
         
         if (_kb == null) { _kb = Keyboard.current; return; }
 
+        bool driftInput = _kb.shiftKey.isPressed;
         float throttleInput = GetThrottleInput();
         float steerInput    = GetSteerInput();
 
         if(_mouse.leftButton.isPressed)
             attemptAttack();
         
-        HandleGrip();
+        HandleGrip(driftInput);
         HandleThrottle(throttleInput);
         HandleSteering(steerInput);
         ApplyLean(steerInput);
         UpdateFov();
+        
+        //update animator
+        Debug.Log(_currentSteer + " " + currentStats.maxSteer);
+        bodyAnimator.SetFloat("Steer", _currentSteer / 450);
+        bodyAnimator.SetFloat(
+            "Speed",
+            _currentSpeed >= 0 ? 
+                _currentSpeed / currentStats.maxSpeed :
+                _currentSpeed / currentStats.maxReverseSpeed
+        );
+        
+        bodyAnimator.SetBool("Drift", driftInput);
     }
 
     // -- Input helpers ------------------------------------------------------
@@ -144,11 +160,11 @@ public class VehicleController : VehicleStats<VehicleStatsModifier>
         return 0f;
     }
 
-    private void HandleGrip()
+    private void HandleGrip(bool driftInput)
     {
         _grip = Mathf.Lerp(
             _grip,
-            _kb.shiftKey.isPressed ?
+            driftInput ?
                 grip * driftGripMultiplier :
                 grip,
             driftTransitionSpeed
@@ -186,8 +202,8 @@ public class VehicleController : VehicleStats<VehicleStatsModifier>
     void HandleSteering(float input)
     {
         float speedRatio = _rb.linearVelocity.magnitude / currentStats.maxSpeed;
-        _currentSteerSpeed = Mathf.Lerp(_currentSteerSpeed, currentStats.maxSteer * input, currentStats.handling);
-        float turnAmount = _currentSteerSpeed * speedRatio * Time.fixedDeltaTime;
+        _currentSteer = Mathf.Lerp(_currentSteer, currentStats.maxSteer * input, currentStats.handling);
+        float turnAmount = _currentSteer * speedRatio * Time.fixedDeltaTime;
 
         transform.Rotate(Vector3.up, turnAmount, Space.World);
     }
